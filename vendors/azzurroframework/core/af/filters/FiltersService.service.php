@@ -1,11 +1,8 @@
 <?php
 /*
-	Boostrap
+	FiltersService (filters) service
 
-	- load the framework
-	- load the plugins
-	- load user application
-	- run the framework
+	- service that permits to use a filter into the application
 
 
 	---- Changelog ---
@@ -27,17 +24,21 @@
 	@author    Alessandro Pasqualini <alessandro.pasqualini.1105@gmail.com>
 	@url       https://github.com/alessandro1105
 */
-	
 
-	//--- LOAD THE FRAMEWORK ---
-	// Requiring the autolaoder files of the framework
-	require_once(__AF_DIR__ . "/core/autoloader.php");
+	// Strict type hint
+	declare(strict_types = 1);
 
-	//--- LOAD THE PLUGINS ---
+	namespace AzzurroFramework\Core\AF\Filters;
 
-	//--- LOAD THE USER APPLICATION ---
-	require_once(__AF_APP_DIR__ . "/autoloader.php");
+	//--- InjectorService service ----
+	final class FiltersService {
 
-	//--- RUN THE FRAMEWORK ---
-	// Run the framework (it will process the request)
-	$af->run();
+		// Application modules
+		private $modules;
+
+
+		// Constructor of the injector service
+		public function __construct(&$modules) {
+			$this->modules = &$modules;
+		}
+	}

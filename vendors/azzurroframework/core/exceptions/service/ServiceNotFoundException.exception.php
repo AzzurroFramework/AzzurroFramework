@@ -1,10 +1,6 @@
 <?php
 /*
-	Azzurro Framework main class
-
-	- define the AzzurroFramework class
-	- instantiate the $af global Object
-
+	ServiceNotFoundException
 
 	---- Changelog ---
 	Rev 1.0 - November 20th, 2017
@@ -26,16 +22,10 @@
 	@url       https://github.com/alessandro1105
 */
 
-	//--- CLASS DEFINTION ---
-	class AzzurroFramework {
-
-		//run function execute the framework
-		public function run() {
-			echo "af -> run()";
-		}
-
+	namespace AzzurroFramework\Core\Exceptions\Service;
+	use \InvalidArgumentException;
+	
+	// Throwed when the user tries to retrive a nonregistered module
+	class ServiceNotFoundException extends InvalidArgumentException {
+		
 	}
-
-	//--- INSTANTIATE THE GLOBAL OBJECT ---
-	$af = new AzzurroFramework();
-

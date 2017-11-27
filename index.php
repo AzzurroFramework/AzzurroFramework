@@ -26,6 +26,11 @@
 	@url       https://github.com/alessandro1105
 */
 
+	use \AzzurroFramework\Core\AzzurroFramework;
+
+	//--- VERSION ---
+	define("__AF_VERSION__", "0.0.1-pre-alfa");
+
 	//--- PATH CONSTANTS ---
 	// Server root
 	define("__AF_ROOT__", __DIR__);
@@ -39,8 +44,14 @@
 	define("__AF_APP_DIR__", __AF_ROOT__ . "/app");
 
 	
-	//--- STARTUP AZZURRO FRAMEWORK ---
-	require_once(__AF_DIR__ . "/bootstrap.php");
+	//--- LOAD AZZURRO FRAMEWORK ---
+	require_once(__AF_DIR__ . "/autoloader.php");
 
-	//--- SHUTDOWN AZZURRTO FRAMEWORK ---
-	require_once(__AF_DIR__ . "/shutdown.php");
+	//--- INSTANTIATE THE FRAMEWORK ---
+	$azzurro = AzzurroFramework::getInstance();
+
+	//--- LOAD USER APPLICATION ---
+	require_once(__AF_APP_DIR__ . "/autoloader.php");
+
+	//--- BOOTSTRAP THE FRAMEWORK ---
+	$azzurro->boostrap();

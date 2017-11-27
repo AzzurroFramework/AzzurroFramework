@@ -1,8 +1,8 @@
 <?php
 /*
-	Azzurro Framework core loader
+	ServiceProviderInterface
 
-	- load all the framework files
+	- define the methods that AzzurroFramework wil use
 
 	---- Changelog ---
 	Rev 1.0 - November 20th, 2017
@@ -24,7 +24,15 @@
 	@url       https://github.com/alessandro1105
 */
 
-	//--- LOADING FRAMEWORK FILES ---
-	
-	// Azzurro Framework main class
-	require_once(__DIR__ . "/azzurro-framework.class.php");
+	namespace AzzurroFramework\Core\Interfaces\Service;
+
+	//--- ServiceProviderInterface interface ----
+	interface ServiceProviderInterface {
+
+		// The constructor of the service provider without arguments
+		public function __construct();
+
+		// The method used to retrive the service
+		public function get();
+
+	}

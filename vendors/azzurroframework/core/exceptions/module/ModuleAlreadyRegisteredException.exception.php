@@ -1,9 +1,6 @@
 <?php
 /*
-	Shutdown
-
-	- shutdown the framework
-
+	ModuleAlreadyRegisteredException
 
 	---- Changelog ---
 	Rev 1.0 - November 20th, 2017
@@ -24,4 +21,11 @@
 	@author    Alessandro Pasqualini <alessandro.pasqualini.1105@gmail.com>
 	@url       https://github.com/alessandro1105
 */
+
+	namespace AzzurroFramework\Core\Exceptions\Module;
+	use \InvalidArgumentException;
 	
+	// Throwed when the user tries to register a module already registered
+	class ModuleAlreadyRegisteredException extends InvalidArgumentException {
+		
+	}
