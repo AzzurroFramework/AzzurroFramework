@@ -30,15 +30,21 @@
 
 	namespace AzzurroFramework\Core\AF\Filters;
 
+	use \AzzurroFramework\Core\Injector\Injector;
+
+
 	//--- InjectorService service ----
 	final class FiltersService {
 
-		// Application modules
-		private $modules;
+		// Injector
+		private $injector;
 
+		// Constructor of the filters service
+		public function __construct(Injector $injector) {
+			$this->inejctor = $injector;
+		}
 
-		// Constructor of the injector service
-		public function __construct(&$modules) {
-			$this->modules = &$modules;
+		public function get(string $name) {
+			$this->injector->getFilter($name);
 		}
 	}
