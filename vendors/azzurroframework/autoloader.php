@@ -25,47 +25,74 @@
 	@url       https://github.com/alessandro1105
 */
 
-	//--- LOADING FRAMEWORK FILES ---
+	//--- AUTOLOADER CORE AZZURRO FRAMEWORK ---
+	spl_autoload_register(function ($class) {
+		// Remove white spaces at the start of the class
+		$className = ltrim($class, '\\');
+		$fileName  = __AF_VENDOR_DIR__ . DIRECTORY_SEPARATOR;
+		$namespace = "";
 
-	//--- EXCEPTIONS ---
-	require_once(__DIR__ . "/core/exceptions/app/AppModuleNotRegisteredException.exception.php");
+		// If there is a namespace
+		if ($lastNsPos = strrpos($class, '\\')) {
+			$namespace = substr($className, 0, $lastNsPos);
+			$className = substr($className, $lastNsPos + 1);
+			$fileName  .= strtolower(str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR);
+		}
 
-	require_once(__DIR__ . "/core/exceptions/constant/ConstantAlreadyRegisteredException.exception.php");
-	require_once(__DIR__ . "/core/exceptions/constant/ConstantNotFoundException.exception.php");
+		// If it's an interface
+		if (strpos($className, "Interface") !== false) {
+			$fileName .= $className . ".interface.php";
 
-	require_once(__DIR__ . "/core/exceptions/controller/ControllerAlreadyRegisteredException.exception.php");
-	require_once(__DIR__ . "/core/exceptions/controller/ControllerNotFoundException.exception.php");
+		// If it's an exception
+		} else if (strpos($className, "Exception") !== false) {
+			$fileName .= $className . ".exception.php";
 
-	require_once(__DIR__ . "/core/exceptions/filter/FilterAlreadyRegisteredException.exception.php");
-	require_once(__DIR__ . "/core/exceptions/filter/FilterNotFoundException.exception.php");
+		// If it's a class
+		} else {
+			$fileName .= $className . ".class.php";
+		
+		}
 
-	require_once(__DIR__ . "/core/exceptions/module/ModuleAlreadyRegisteredException.exception.php");
-	require_once(__DIR__ . "/core/exceptions/module/ModuleConfigAlreadyRegisteredException.exception.php");
-	require_once(__DIR__ . "/core/exceptions/module/ModuleNotFoundException.exception.php");
-	require_once(__DIR__ . "/core/exceptions/module/ModuleRunAlreadyRegisteredException.exception.php");
-
-	require_once(__DIR__ . "/core/exceptions/service/ServiceAlreadyRegisteredException.exception.php");
-	require_once(__DIR__ . "/core/exceptions/service/ServiceNotFoundException.exception.php");
-	require_once(__DIR__ . "/core/exceptions/service/ServiceProviderNotFoundException.exception.php");
-	require_once(__DIR__ . "/core/exceptions/service/ServiceProviderResultException.exception.php");
-
-	require_once(__DIR__ . "/core/exceptions/ComponentNotFoundException.exception.php");
-	require_once(__DIR__ . "/core/exceptions/FactoryFunctionResultException.exception.php");
-	require_once(__DIR__ . "/core/exceptions/NotACallableException.exception.php");
-
-
-	//--- INTERFACES ---
-	require_once(__DIR__ . "/core/interfaces/service/ServiceProviderInterface.interface.php");
-	require_once(__DIR__ . "/core/interfaces/router/RouterInterface.interface.php");
-	require_once(__DIR__ . "/core/interfaces/processor/ProcessorInterface.interface.php");
+		// If the file exists
+		if (file_exists($fileName)) {
+			require_once($fileName);
+		}
+	});
 
 
-	//--- af MODULE ---
-	require_once(__DIR__ . "/core/af/injector/InjectorService.service.php");
-	
+	//--- AUTOLOADER AF MODULE COMPONENTS ---
+	spl_autoload_register(function ($class) {
+		// Remove white spaces at the start of the class
+		$className = ltrim($class, '\\');
+		$fileName  = __AF_VENDOR_DIR__ . DIRECTORY_SEPARATOR;
+		$namespace = "";
 
-	//--- CLASSES ---
-	require_once(__DIR__ . "/core/scope/Scope.class.php");
-	require_once(__DIR__ . "/core/module/Module.class.php");
-	require_once(__DIR__ . "/core/injector/Injector.class.php");
-	require_once(__DIR__ . "/core/AzzurroFramework.class.php");
+		// If there is a namespace
+		if ($lastNsPos = strrpos($class, '\\')) {
+			$namespace = substr($className, 0, $lastNsPos);
+			$className = substr($className, $lastNsPos + 1);
+			$fileName  .= strtolower(str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR);
+		}
+
+		// If it's a provider
+		if (strpos($className, "Provider") !== false) {
+			$fileName .= $className . ".provider.php";
+
+		// If it's a service	
+		} else if (strpos($className, "Service") !== false) {
+			$fileName .= $className . ".service.php";
+
+		// If it's a filter	
+		} else if (strpos($className, "Filter") !== false) {
+			$fileName .= $className . ".filter.php";
+
+		// If it's a controller
+		} else if (strpos($className, "Controller") !== false) {
+			$fileName .= $className . ".controller.php";
+		}
+
+		// If the file exists
+		if (file_exists($fileName)) {
+			require_once($fileName);
+		}
+	});

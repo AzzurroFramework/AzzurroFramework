@@ -40,6 +40,7 @@
 	use \AzzurroFramework\Core\Module\Module;
 
 	use \AzzurroFramework\Core\AF\Injector\InjectorService;
+	use \AzzurroFramework\Core\AF\Filters\FiltersService;
 
 
 
@@ -55,6 +56,7 @@
 		private $app;
 		// Injector
 		private $injector;
+
 
 		//--- SINGLETON COSTRUCTOR ----
 		// Singleton object
@@ -156,8 +158,18 @@
 			// Create the module
 			$af = $this->module("af", []);
 
-			// $injector
+			// Prepare the injector to pass to services
 			$injector = $this->injector;
+
+			// $events services
+			$af->service("events", "\AzzurroFramework\Core\AF\Events\EventsService");
+
+			// $filters services
+			$af->factory("filters", function () use ($injector) {
+				return new FiltersService($injector);
+			});
+
+			// $injector services
 			$af->factory("injector", function () use ($injector) {
 				return new InjectorService($injector);
 			});
