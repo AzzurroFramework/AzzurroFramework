@@ -70,7 +70,8 @@
 				throw new InvalidArgumentException("\$app argument must be a valid module name!");
 			}
 
-			// Adding AzzurroFramework main module to the resolved module (standalone)
+			// Adding AzzurroFramework core modules to the resolved module (standalone)
+			$this->modulesResolved[] = "auto";
 			$this->modulesResolved[] = "af";
 
 			// Resolve the dependencies of the app module
@@ -116,7 +117,7 @@
 				
 				// If has not been found neither a service or a constant
 				if (is_null($argument)) {
-					throw new ComponentNotFoundException("Component '$name' has not been registered!");
+					throw new ComponentNotFoundException("Component '$parameter->name' has not been registered!");
 				}
 
 				$arguments[] = $argument;
@@ -224,7 +225,7 @@
 								throw new ServiceNotFoundException("Service '$serviceName' has not been registered!");
 							}
 							// If the service is not instantiated
-							if (!isset($service['service'])) {
+							if (!isset($service['service'])) {								
 								
 								// If the service is registered with the factory function
 								if (isset($service['factory'])) {
@@ -243,7 +244,7 @@
 								// If the service is register with provider function
 								} else if (isset($service['provider'])) {
 									// Check if the provider has been alredy instantiate
-									if (is_null($service['provider'])) {
+									if (isset($service['class'])) {
 										// Instantiate the provider
 										$service['provider'] = new $service['class']();
 										unset($service['class']);
@@ -265,7 +266,6 @@
 									}
 									// Save the service instance
 									$service['service'] = $result;
-									unset($service['provider']);
 								
 								// If the service is registered with the service function
 								} else if (isset($service['class'])) {
@@ -301,7 +301,7 @@
 						// If the service name is the one needed to be found
 						if ($serviceName == $name and isset($service['provider'])) {
 							// Check if the provider has been alredy instantiate
-							if (is_null($service['provider'])) {
+							if (isset($service['class'])) {
 								// Instantiate the provider
 								$service['provider'] = new $service['class']();
 								unset($service['class']);
@@ -374,10 +374,18 @@
 			foreach ($this->modulesResolved as $module) {
 				// If the module has services registered
 				if (isset($this->modules[$module]['controllers'])) {
-					foreach ($this->modules[$module]['controllers'] as $controllerName => $controller) {
+					foreach ($this->modules[$module]['controllers'] as $controllerName => &$controller) {
 						// If the service name is the one needed to be found
 						if ($controllerName == $name) {
-							return $controller['class'];
+							if (!isset($controller['controller'])) {
+								// Instanstiare the controller
+								$reflection = new ReflectionClass($controller['class']);
+								$controller['controller'] = $reflection->newInstance();
+								unset($controller['class']);
+							}
+
+							// Return the controller
+							return $controller['controller'];
 						}
 					}
 				}
@@ -421,7 +429,7 @@
 					}
 
 				} else {
-					$argument = $this->serachConstant($parameter->name); // Need to call serviceName without Provider
+					$argument = $this->searchConstant($parameter->name); // Need to call serviceName without Provider
 					if (is_null($argument)) {
 						throw new ConstantNotFoundException("Constant '$parameter' has not been registered!");
 					}

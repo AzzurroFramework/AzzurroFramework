@@ -133,7 +133,7 @@
 			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $name)) {
 				throw new InvalidArgumentException("\$name argument must be a valid service name!");
 			}
-			if (!class_exists($provider) and !in_array("AzzurroFramework\Core\Service\Provider\ServiceProviderInterface", class_implements($class))) {
+			if (!class_exists($class) and !in_array("AzzurroFramework\Core\Interfaces\Service\ServiceProviderInterface", class_implements($class))) {
 				throw new InvalidArgumentException("\$class must be a valid class that implements ServiceProviderInterface!");
 			}
 			// Check if there is already registered a service with this name
@@ -147,7 +147,7 @@
 			}
 			$this->module['services'][$name] = [
 				"class" => $class,
-				"provider" => null
+				"provider" => true
 			];
 			
 			// Chain API
