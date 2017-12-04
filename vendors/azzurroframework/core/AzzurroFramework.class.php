@@ -39,9 +39,9 @@
 	use \AzzurroFramework\Core\Injector\Injector;
 	use \AzzurroFramework\Core\Module\Module;
 
-	use \AzzurroFramework\Core\AF\Injector\InjectorService;
-	use \AzzurroFramework\Core\AF\Filters\FiltersService;
-
+	use \AzzurroFramework\Core\Modules\Auto\Injector\InjectorService;
+	use \AzzurroFramework\Core\Modules\Auto\Filter\FilterService;
+	use \AzzurroFramework\Core\Modules\Auto\Controller\ControllerService;
 
 
 	//--- AzzurroFramework class ----
@@ -78,7 +78,7 @@
 			$this->injector = new Injector($this->modules);
 
 			// Reister af module components
-			$this->registerAFModuleComponent();
+			$this->registerAutoModuleComponent();
 		}
 
 		//--- CERATING AND GETTING THE MAIN MODULE ---
@@ -143,8 +143,17 @@
 
 			// Resolve the dependencies of the app module
 			$this->injector->resolveApplicationDependencies($this->app);
-			
-			echo "<br>resolved!<br>";
+
+			// Getting $event service
+			$event = $this->injector->getService("event");
+			$azzurro = $this->injector->getService("azzurro");
+
+			// Generate event to start the routing process
+			$event->emit($azzurro->getRouteEvent());
+
+			// Generate event to start all the callback
+			$event->emit($azzurro->getCallbackEvent());
+
 		}
 
 		//--- VERSION INFO ---
@@ -154,23 +163,31 @@
 		}
 
 		//--- REGISTER COMPONENTS OF MODULE af ---
-		public function registerAFModuleComponent() {
+		public function registerAutoModuleComponent() {
 			// Create the module
-			$af = $this->module("af", []);
+			$auto = $this->module("auto", []);
 
 			// Prepare the injector to pass to services
 			$injector = $this->injector;
 
-			// $events services
-			$af->service("events", "\AzzurroFramework\Core\AF\Events\EventsService");
+			// $azzurro service
+			$auto->provider("azzurro", "\AzzurroFramework\Core\Modules\Auto\Azzurro\AzzurroServiceProvider");
 
-			// $filters services
-			$af->factory("filters", function () use ($injector) {
-				return new FiltersService($injector);
+			// $controller service
+			$auto->factory("controller", function () use ($injector) {
+				return new ControllerService($injector);
 			});
 
-			// $injector services
-			$af->factory("injector", function () use ($injector) {
+			// $events service
+			$auto->service("event", "\AzzurroFramework\Core\Modules\Auto\Event\EventService");
+
+			// $filters service
+			$auto->factory("filter", function () use ($injector) {
+				return new FilterService($injector);
+			});
+
+			// $injector service
+			$auto->factory("injector", function () use ($injector) {
 				return new InjectorService($injector);
 			});
 

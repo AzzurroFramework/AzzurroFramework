@@ -54,14 +54,16 @@
 		}
 
 		// If the file exists
-		if (file_exists($fileName)) {
+		if (file_exists($fileName) and is_file($fileName)) {
 			require_once($fileName);
 		}
 	});
 
 
-	//--- AUTOLOADER AF MODULE COMPONENTS ---
+	//--- AUTOLOADER CORE MODULES ---
+	// Classes and exceptions are automatically loaded
 	spl_autoload_register(function ($class) {
+
 		// Remove white spaces at the start of the class
 		$className = ltrim($class, '\\');
 		$fileName  = __AF_VENDOR_DIR__ . DIRECTORY_SEPARATOR;
@@ -92,7 +94,20 @@
 		}
 
 		// If the file exists
-		if (file_exists($fileName)) {
+		if (file_exists($fileName) and is_file($fileName)) {
 			require_once($fileName);
 		}
 	});
+
+
+	// --- LOADING THE CORE MODULES ---
+	// Scan the core modules directory
+	foreach (scandir(__DIR__ . "/core/modules/") as $content) {
+		// Create the module declaration file
+		$module = __DIR__ . "/core/modules/" . $content . "/" . $content . ".module.php";
+		// If the file exists
+		if (file_exists($module)) {
+			// Require it
+			require_once($module);
+		}
+	}

@@ -1,8 +1,8 @@
 <?php
 /*
-	FiltersService (filters) service
+	ControllerService (controller) service
 
-	- service that permits to use a filter into the application
+	- service that permits to execute a controller
 
 
 	---- Changelog ---
@@ -28,13 +28,15 @@
 	// Strict type hint
 	declare(strict_types = 1);
 
-	namespace AzzurroFramework\Core\AF\Filters;
+	namespace AzzurroFramework\Core\Modules\Auto\Controller;
 
 	use \AzzurroFramework\Core\Injector\Injector;
 
+	use \InvalidArgumentException;
 
-	//--- InjectorService service ----
-	final class FiltersService {
+
+	//--- ControllerService service ----
+	final class ControllerService {
 
 		// Injector
 		private $injector;
@@ -44,7 +46,17 @@
 			$this->inejctor = $injector;
 		}
 
-		public function get(string $name) {
-			$this->injector->getFilter($name);
+		public function execute($name) {
+			// Checking arguments correctness
+			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $name)) {
+				throw new InvalidArgumentException("\$app argument must be a valid controller name!");
+			}
+
+			// Obtain the controller
+			$controller = $this->injector->getController($name);
+
+			// Execute the controller and return the result
+			return $this->injector->call(array($controller, "action"));
 		}
+
 	}

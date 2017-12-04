@@ -29,7 +29,7 @@
 	// Strict type hint
 	declare(strict_types = 1);
 
-	namespace AzzurroFramework\Core\AF\Injector;
+	namespace AzzurroFramework\Core\Modules\Auto\Injector;
 
 	use \AzzurroFramework\Core\Injector\Injector;
 	

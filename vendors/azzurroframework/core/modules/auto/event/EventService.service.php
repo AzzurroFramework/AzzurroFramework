@@ -1,8 +1,8 @@
 <?php
 /*
-	EventsService (events) service
+	EventService (event) service
 
-	- service that permits to use a filter into the application
+	- service that permits to register callbacks to specific events
 
 
 	---- Changelog ---
@@ -28,13 +28,13 @@
 	// Strict type hint
 	declare(strict_types = 1);
 
-	namespace AzzurroFramework\Core\AF\Events;
+	namespace AzzurroFramework\Core\Modules\Auto\Event;
 
-	use \IllgealArgumentException;
+	use \InvalidArgumentException;
 
 
-	//--- InjectorService service ----
-	final class EventsService {
+	//--- EventService service ----
+	final class EventService {
 
 		// Injector service
 		private $injector;
@@ -53,11 +53,11 @@
 		// Register a callback to the event
 		public function on(string $event, $callback) {
 			// Checking arguments correctness
-			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $event)) {
+			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_:.\x7f-\xff]*$/', $event)) {
 				throw new InvalidArgumentException("\$event argument must be a valid event name!");
 			}
 			if (!is_callable($callback) and !(is_array($callback) and (is_object($callback[0]) or class_exists($allback[0])) and method_exists($callback[0], $callback[1]))) {
-				throw new IllgealArgumentException("\$callback must be a valid callable!");
+				throw new InvalidArgumentException("\$callback must be a valid callable!");
 			}
 
 			// Register the callback to the event
@@ -70,7 +70,7 @@
 		// Emit an event
 		public function emit(string $event) {
 			// Checking arguments correctness
-			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $event)) {
+			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_:.\x7f-\xff]*$/', $event)) {
 				throw new InvalidArgumentException("\$event argument must be a valid event name!");
 			}
 
