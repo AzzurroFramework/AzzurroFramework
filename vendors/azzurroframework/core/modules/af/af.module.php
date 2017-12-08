@@ -61,17 +61,8 @@
 	->service("callback", "\AzzurroFramework\Core\Modules\AF\Callback\CallbackService")
 	// $log service
 	->provider("log", "\AzzurroFramework\Core\Modules\AF\Log\LogServiceProvider")
-
-	// Processor services
-	// $messageProcessor service
-	->provider("messageProcessor", "\AzzurroFramework\Core\Modules\AF\Processor\Message\MessageProcessorServiceProvider")
-	// $templateProcessor service
-	->provider("templateProcessor", "\AzzurroFramework\Core\Modules\AF\Processor\Template\TemplateProcessorServiceProvider")
-
-
 	// $router service
 	->provider("router", "\AzzurroFramework\Core\Modules\AF\Router\RouterServiceProvider")
-
 	
 	// Supervariable access services
 	// // $cookie service
@@ -89,8 +80,11 @@
 	// $request service
 	->service("request", "\AzzurroFramework\Core\Modules\AF\Superglobal\Request\RequestService")
 	// $server service
-	->service("server", "\AzzurroFramework\Core\Modules\AF\Superglobal\Server\ServerService");
+	->service("server", "\AzzurroFramework\Core\Modules\AF\Superglobal\Server\ServerService")
 	// // $session service
 	// ->service("session", "\AzzurroFramework\Core\Modules\AF\Superglobal\Session\SessionService");
+
+	// $template service
+	->service("template", "\AzzurroFramework\Core\Modules\AF\Template\TemplateService");
 
 

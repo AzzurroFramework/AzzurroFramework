@@ -44,7 +44,6 @@
 			"controller" => "controller_name", 		// Mandatory
 			"template" => "template in string", 	// Optional, only template or templateUrl in the same state definition
 			"templateUrl" => "path/to/find/tpl"		// Optional, only template or templateUrl in the same state definition
-			"api" => "true"							// Optional, must a be boolean
 		]);
 	*/
 
@@ -63,8 +62,7 @@
 				"states" => array(),
 				"whenConditions" => array(),
 				"otherwhise" => null,
-				"messageProcessor" => "messageProcessor", // Default messageProcessor service
-				"templateProcessor" => "templateProcessor" // Default templateProcessor service
+				"templateProcessor" => "template" // Default templateProcessor service
 			];
 		}
 
@@ -102,10 +100,6 @@
 			// templateUrl
 			if (isset($state['templateUrl']) and !file_exists($state['templateUrl'])) {
 				throw new InvalidArgumentException("'templateUrl' field must be a valid template file!");
-			}
-			// api
-			if (isset($state['api']) and !is_bool($state['api'])) {
-				throw new InvalidArgumentException("'api' field must be a boolean value!");
 			}
 
 			// Save the state definition
@@ -149,19 +143,6 @@
 		}
 
 		// Set a custom message processor service
-		public function setMessageProcessor(string $name) {
-			// Check the correctness of the the arguments
-			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $name)) {
-				throw new InvalidArgumentException("\$name argument must be a valid service name!");
-			}
-
-			$this->config['messageProcessor'] = $name;
-
-			// Chain API
-			return $this;
-		}
-
-		// Set a custom template processor service
 		public function setTemplateProcessor(string $name) {
 			// Check the correctness of the the arguments
 			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $name)) {

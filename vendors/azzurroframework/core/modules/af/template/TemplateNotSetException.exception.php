@@ -1,9 +1,6 @@
 <?php
 /*
-	TemplateProcessorService (templateProcessor) service
-
-	- service that permits to handle the template of a controller
-
+	TemplateNotSetException
 
 	---- Changelog ---
 	Rev 1.0 - November 20th, 2017
@@ -25,32 +22,11 @@
 	@url       https://github.com/alessandro1105
 */
 
-	// Strict type hint
-	declare(strict_types = 1);
-
-	namespace AzzurroFramework\Core\Modules\AF\Processor\Template;
-
-	use \InvalidArgumentException;
-
-
-	//--- TemplateProcessorService service ----
-	final class TemplateProcessorService {
-
-		// Contructor
-		public function __construct() {
-
-		}
-
-		public function reset() {
-
-		}
-
-		public function setTemplate($tpl, $url) {
-
-		}
-
-		public function render() {
-			
-		}
+	namespace AzzurroFramework\Core\Modules\AF\Template;
+	
+	use \Exception;
+	
+	// Throwed when the user tries to retrive a nonregistered module
+	class TemplateNotSetException extends Exception {
 
 	}

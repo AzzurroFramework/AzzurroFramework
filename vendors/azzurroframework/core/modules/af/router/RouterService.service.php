@@ -201,15 +201,9 @@
 			// Save the current state
 			$this->current['state'] = $state;
 
-			// Prerare the messageProcessor or the templateProcessor
-			if (isset($state['api']) and $state['api']) {
-				$processor = $this->injector->get($this->config['messageProcessor']);
-
-			} else {
-				$processor = $this->injector->get($this->config['templateProcessor']);
-			}
-
-			// Reset the view processor
+			// Getting the template processor
+			$processor = $this->injector->get($this->config['templateProcessor']);
+			// Reset the template processor
 			$processor->reset();
 			// Setting up the template
 			if (isset($state['template'])) {
