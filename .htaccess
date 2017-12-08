@@ -1,0 +1,24 @@
+<IfModule mod_rewrite.c>
+
+	#DirectoryIndex
+
+	#Options +FollowSymlinks
+
+	RewriteEngine On
+	#RewriteBase /
+
+	#redirect to https
+	#RewriteCond %{HTTPS} off
+	#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+	#rewrite rule azzurro
+	RewriteCond %{ENV:REDIRECT_STATUS} !200 
+	RewriteRule ^(.*)$ index.php?/$1 [L,QSA]
+
+</IfModule>
+
+#Cross Site Script
+#<IfModule mod_headers.c>
+#   Header set Access-Control-Allow-Origin "http://localhost"
+#   Header set Access-Control-Allow-Credentials true
+#</IfModule>
