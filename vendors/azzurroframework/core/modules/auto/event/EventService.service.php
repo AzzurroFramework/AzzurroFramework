@@ -42,7 +42,7 @@
 		private $callbacks;
 
 
-		// Constructor of the injector service
+		// Constructor
 		public function __construct($injector) {
 			$this->callbacks = array();
 

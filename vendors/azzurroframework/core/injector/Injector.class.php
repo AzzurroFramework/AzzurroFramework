@@ -33,7 +33,6 @@
 	use \InvalidArgumentException;
 	use \AzzurroFramework\Core\Exceptions\ComponentNotFoundException;
 	use \AzzurroFramework\Core\Exceptions\FactoryFunctionResultException;
-	use \AzzurroFramework\Core\Exceptions\NotACallableException;
 	use \AzzurroFramework\Core\Exceptions\Constant\ConstantNotFoundException;
 	use \AzzurroFramework\Core\Exceptions\Controller\ControllerNotFoundException;
 	use \AzzurroFramework\Core\Exceptions\Filter\FilterNotFoundException;
@@ -96,16 +95,16 @@
 		public function resolve($callback) {
 			// Checking arguments correctness
 			if (!is_callable($callback) and !(is_array($callback) and (is_object($callback[0]) or class_exists($callback[0])) and method_exists($callback[0], $callback[1]))) {
-				throw new NotACallableException("\$callback must be a valid callable!");
+				throw new InvalidArgumentException("\$callback must be a valid callable!");
 			}
 
 			// Instance of the reflection method
 			$reflection = null;
 
-			if (is_callable($callback)) {
-				$reflection = new ReflectionFunction($callback);
-			} else if (is_array($callback)) {
+			if (is_array($callback)) {
 				$reflection = new ReflectionMethod($callback[0], $callback[1]);
+			} else {
+				$reflection = new ReflectionFunction($callback);
 			}
 
 			$parameters = $reflection->getParameters();
@@ -132,7 +131,7 @@
 		public function call($callback) {
 			// Checking arguments correctness
 			if (!is_callable($callback) and !(is_array($callback) and (is_object($callback[0]) or class_exists($callback[0])) and method_exists($callback[0], $callback[1]))) {
-				throw new NotACallableException("\$callback must be a valid callable!");
+				throw new InvalidArgumentException("\$callback must be a valid callable!");
 			}
 
 			return $this->executeCallback($callback);
@@ -200,10 +199,10 @@
 			}
 
 			// Searching the controller
-			$controller = $this->searchService($name);
+			$controller = $this->searchController($name);
 			// If the controller has not been found
 			if (is_null($controller)) {
-				throw new ControllerNotFoundException("Controllr '$name' has not been registered!");
+				throw new ControllerNotFoundException("Controller '$name' has not been registered!");
 			}
 
 			// return the controller

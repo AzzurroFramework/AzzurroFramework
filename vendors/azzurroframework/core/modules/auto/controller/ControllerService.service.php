@@ -41,9 +41,9 @@
 		// Injector
 		private $injector;
 
-		// Constructor of the filters service
+		// Constructor
 		public function __construct(Injector $injector) {
-			$this->inejctor = $injector;
+			$this->injector = $injector;
 		}
 
 		public function execute($name) {

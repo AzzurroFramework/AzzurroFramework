@@ -1,6 +1,9 @@
 <?php
 /*
-	NotACallableException
+	EnvService (env) service
+
+	- service that permits to access and handle superglobal variable $_ENV
+
 
 	---- Changelog ---
 	Rev 1.0 - November 20th, 2017
@@ -22,10 +25,37 @@
 	@url       https://github.com/alessandro1105
 */
 
-	namespace AzzurroFramework\Core\Exceptions;
-	use \Exception;
-	
-	// Throwed when the user tries to retrive a nonregistered module
-	class NotACallableException extends Exception {
+	// Strict type hint
+	declare(strict_types = 1);
+
+	namespace AzzurroFramework\Core\Modules\AF\Superglobal\Env;
+
+	use \InvalidArgumentException;
+
+
+	//--- EnvService service ----
+	final class EnvService {
+
+		// $_ENV supervariable
+		private $env;
+
+
+		// Contructor
+		public function __construct() {
+			global $_ENV;
+
+			// Save the pointer to $_ENV
+			$this->env = &$_ENV;
+		}
+
+		// Return the requested value from its key
+		public function get(string $name) {
+			return $this->env[$name];
+		}
+
+		// Check if the requested key exists
+		public function isSet(string $name) {
+			return isset($this->env[$name]);
+		}
 
 	}

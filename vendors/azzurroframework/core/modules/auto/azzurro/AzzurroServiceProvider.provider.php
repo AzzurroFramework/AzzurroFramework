@@ -41,12 +41,12 @@
 		// Variable that contains all the configuration for the service $azzurro (AzzurroFramework)
 		private $config;
 
-		// Constructor of the injector service
+		// Constructor
 		public function __construct() {
 			// Default settings
 			$this->config = [
-				"routeEvent" => "AF:route",
-				"callbackEvent" => "AF:callback"
+				"routeEvent" => "",
+				"callbackEvent" => ""
 			];
 		}
 

@@ -34,7 +34,10 @@
 	use \AzzurroFramework\Core\Exception\Constant\ConstantAlreadyRegisteredException;
 	use \AzzurroFramework\Core\Exception\Controller\ControllerAlreadyRegisteredException;
 	use \AzzurroFramework\Core\Exception\Filter\FilterAlreadyRegisteredException;
+	use \AzzurroFramework\Core\Exception\Module\ModuleConfigAlreadyRegisteredException;
+	use \AzzurroFramework\Core\Exception\Module\ModuleRunAlreadyRegisteredException;
 	use \AzzurroFramework\Core\Exception\Service\ServiceAlreadyRegisteredException;
+
 
 	use \AzzurroFramework\Core\Interfaces\Service\ServiceProviderInterface;
 
@@ -56,7 +59,7 @@
 		public function config(callable $callback) {
 			// Check if there is already a config function
 			if (array_key_exists('config', $this->module)) {
-				throw new ComponentAlreadyRegisteredException("Config callback has alredy been registered inside this module!");
+				throw new ModuleConfigAlreadyRegisteredException("Config callback has alredy been registered inside this module!");
 			}
 
 			$this->module['config'] = $callback;
@@ -69,7 +72,7 @@
 		public function run(callable $callback) {
 			// Check if there is already a run function
 			if (array_key_exists('run', $this->module)) {
-				throw new ComponentAlreadyRegisteredException("Run callback has alredy been registered inside this module!");
+				throw new ModuleRunAlreadyRegisteredException("Run callback has alredy been registered inside this module!");
 			}
 
 			$this->module['run'] = $callback;
@@ -195,7 +198,7 @@
 			if (!array_key_exists('controllers', $this->module)) {
 				$this->module['controllers'] = array();
 			}
-			$this->module['controller'][$name] = [
+			$this->module['controllers'][$name] = [
 				"class" => $class
 			];
 

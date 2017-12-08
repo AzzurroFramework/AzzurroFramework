@@ -30,7 +30,7 @@
 
 	namespace AzzurroFramework\Core\Modules\AF\Log;
 
-	use \IllgealArgumentException;
+	use \InvalidArgumentException;
 
 	use \AzzurroFramework\Core\Interfaces\Service\ServiceProvider;
 
@@ -44,7 +44,7 @@
 		// Variable that contains all the configuration for the service
 		private $config;
 
-		// Constructor of the injector service
+		// Constructor
 		public function __construct(&$config) {
 			$this->config = &$config;
 		}

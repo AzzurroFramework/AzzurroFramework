@@ -41,7 +41,7 @@
 		// Variable that contains all the configuration for the service $azzurro (AzzurroFramework)
 		private $config;
 
-		// Constructor of the injector service
+		// Constructor
 		public function __construct(&$config) {
 			$this->config = &$config;
 		}

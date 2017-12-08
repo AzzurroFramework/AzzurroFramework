@@ -30,25 +30,22 @@
 
 	namespace AzzurroFramework\Core\Modules\AF\Router;
 
-	use \IllgealArgumentException;
+	use \InvalidArgumentException;
 
 	use \AzzurroFramework\Core\Interfaces\Service\ServiceProviderInterface;
+
 
 	/*
 		STATE DEFINITION
 
 		$routeProvider.state([
-			"name" => "state_name", 				// Optional, must be a valid variable name
-			"url" => "state/url", 					// Mandatory
+			"name" => "state_name", 				// Optional, must be a valid variable name and be unique
+			"url" => "state/url", 					// Optional, must be a valid url path
 			"controller" => "controller_name", 		// Mandatory
-			"template" => "template in string", 	// Optional, only template, templateUrl or message in the same state definition
-			"templateUrl" => "path/to/find/tpl"		// Optional, only template, templateUrl or message in the same state definition
-			"message" => "message in string",		// Optional, only template, templateUrl or message in the same state definition
+			"template" => "template in string", 	// Optional, only template or templateUrl in the same state definition
+			"templateUrl" => "path/to/find/tpl"		// Optional, only template or templateUrl in the same state definition
 			"api" => "true"							// Optional, must a be boolean
 		]);
-
-		If it's defined '"api" => true', only message can be defined: template, templateUrl will be considered errors.
-		If it's defined 'template', 'templateUlr' will be considered error and vice versa.
 	*/
 
 
@@ -59,34 +56,134 @@
 		private $config;
 
 
-		// Constructor of the injector service
+		// Constructor
 		public function __construct() {
 			// Default settings
 			$this->config = [
 				"states" => array(),
-				"when" => array(),
+				"whenConditions" => array(),
 				"otherwhise" => null,
+				"messageProcessor" => "messageProcessor", // Default messageProcessor service
+				"templateProcessor" => "templateProcessor" // Default templateProcessor service
 			];
 		}
 
 		// Register a state
 		public function state(array $state) {
+			// Check the mandatory field of the state
+			if (!isset($state['controller'])) { // Controller field is mandatory
+				throw new InvalidArgumentException("'controller' field is mandatory, you must defined it into the state!");
+			}
+			// url
+			if (isset($state['url']) and !preg_match("/^(\/(\:?[a-zA-Z0-9_]+))*(\/|(\/?\?[a-zA-Z0-9_]+(\&[a-zA-Z0-9_]+)*))?$/", $state['url'])) {
+				throw new InvalidArgumentException("\$url must be a valid url path!");
+			}
+			// name
+			if (isset($state['name'])) {
+				// Check if the name is valid
+				if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $state['name'])) {
+					InvalidArgumentException("'name' field must be a valid state name!");
+				}
+				// Check the uniqueness of the name
+				foreach ($this->config['states'] as $stateDefined) {
+					if ($stateDefined['name'] == $state['name']) {
+						throw new InvalidArgumentException("'name' field must be unique!");
+					}
+				}
+			}
+			// controller
+			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $state['controller'])) {
+				throw new InvalidArgumentException("'controller' field must be a valid controller name!");
+			}
+			// template
+			if (isset($state['template']) and !is_string($state['template'])) {
+				throw new InvalidArgumentException("'template' field must be a string!");
+			}
+			// templateUrl
+			if (isset($state['templateUrl']) and !file_exists($state['templateUrl'])) {
+				throw new InvalidArgumentException("'templateUrl' field must be a valid template file!");
+			}
+			// api
+			if (isset($state['api']) and !is_bool($state['api'])) {
+				throw new InvalidArgumentException("'api' field must be a boolean value!");
+			}
 
+			// Save the state definition
+			$this->config['states'][] = $state;
+
+			// Chain API
+			return $this;
 		}
 
 		// Register a callback executed when the requested url matches
-		public function when(string $url, callback $callback) {
+		public function when(string $url, $callback) {
+			//check the argument correctness
+			if (!preg_match("/^(\/[a-zA-Z0-9_]+)*(\/|(\/?\?[a-zA-Z0-9_]+(\&[a-zA-Z0-9_]+)*))?$/", $url)) { // Url must be a valid url path
+				throw new InvalidArgumentException("\$url must be a valid url path!");
+			}
+			if (!is_callable($callback) and !(is_array($callback) and (is_object($callback[0]) or class_exists($callback[0])) and method_exists($callback[0], $callback[1]))) {
+				throw new InvalidArgumentException("\$callback must be a valid callable!");
+			}
 
+			// Save the when condition and callback
+			$this->config['whenConditions'][] = [
+				"url" => $url,
+				"callback" => $callback
+			];
+
+			// Chain API
+			return $this;
 		}
 
 		// Register a callback executed when no states and no when conditions matches
-		public function otherwhise(callback $callback) {
-			
+		public function otherwise($callback) {
+			if (!is_callable($callback) and !(is_array($callback) and (is_object($callback[0]) or class_exists($callback[0])) and method_exists($callback[0], $callback[1]))) {
+				throw new InvalidArgumentException("\$callback must be a valid callable!");
+			}
+
+			// Save the otherwhise callback
+			$this->config['otherwhise'] = $callback;
+
+			// Chain API
+			return $this;
+		}
+
+		// Set a custom message processor service
+		public function setMessageProcessor(string $name) {
+			// Check the correctness of the the arguments
+			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $name)) {
+				throw new InvalidArgumentException("\$name argument must be a valid service name!");
+			}
+
+			$this->config['messageProcessor'] = $name;
+
+			// Chain API
+			return $this;
+		}
+
+		// Set a custom template processor service
+		public function setTemplateProcessor(string $name) {
+			// Check the correctness of the the arguments
+			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $name)) {
+				throw new InvalidArgumentException("\$name argument must be a valid service name!");
+			}
+
+			$this->config['templateProcessor'] = $name;
+
+			// Chain API
+			return $this;
 		}
 
 		// Getting the service
 		public function get() {
-			return new RouterService($this->config);
+
+			// Prepare the data to pass to the service
+			$config = &$this->config;
+
+			// Factory function
+			return function ($injector, $controller) use ($config) {
+				return new RouterService($config, $injector, $controller);
+			};
 		}
 
 	}

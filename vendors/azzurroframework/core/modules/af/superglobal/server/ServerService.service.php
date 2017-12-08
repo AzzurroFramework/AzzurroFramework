@@ -1,8 +1,8 @@
 <?php
 /*
-	CallbackService (callback) service
+	ServerService (server) service
 
-	- service that permits to register a callback to be executed
+	- service that permits to access and handle superglobal variable $_SERVER
 
 
 	---- Changelog ---
@@ -28,34 +28,34 @@
 	// Strict type hint
 	declare(strict_types = 1);
 
-	namespace AzzurroFramework\Core\Modules\AF\Callback;
+	namespace AzzurroFramework\Core\Modules\AF\Superglobal\Server;
 
 	use \InvalidArgumentException;
 
 
-	//--- CallbackService service ----
-	final class CallbackService {
+	//--- ServerService service ----
+	final class ServerService {
 
-		// Event to which register the callbacks
-		const EVENT_CALLBACK = "CallbackService::callback";
-
-		// Event service
-		private $event;
+		// $_SERVER supervariable
+		private $server;
 
 
-		// Constructor
-		public function __construct($event) {
-			$this->event = $event;
+		// Contructor
+		public function __construct() {
+			global $_SERVER;
+
+			// Save the pointer to $_SERVER
+			$this->server = &$_SERVER;
 		}
 
-		// Register a callback
-		public function attach($callback) {
-			// Checking arguments correctness
-			if (!is_callable($callback) and !(is_array($callback) and (is_object($callback[0]) or class_exists($allback[0])) and method_exists($callback[0], $callback[1]))) {
-				throw new InvalidArgumentException("\$callback must be a valid callable!");
-			}
-			
-			$this->event->on(self::EVENT_CALLBACK, $callback);
+		// Return the requested value from its key
+		public function get(string $name) {
+			return $this->server[$name];
+		}
+
+		// Check if the requested key exists
+		public function isSet(string $name) {
+			return isset($this->server[$name]);
 		}
 
 	}

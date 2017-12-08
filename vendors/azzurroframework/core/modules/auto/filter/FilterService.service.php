@@ -39,12 +39,16 @@
 		// Injector
 		private $injector;
 
-		// Constructor of the filters service
+		// Constructor
 		public function __construct(Injector $injector) {
 			$this->inejctor = $injector;
 		}
 
 		public function get(string $name) {
+			// Checking arguments correctness
+			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $name)) {
+				throw new InvalidArgumentException("\$app argument must be a valid filter name!");
+			}
 			$this->injector->getFilter($name);
 		}
 	}

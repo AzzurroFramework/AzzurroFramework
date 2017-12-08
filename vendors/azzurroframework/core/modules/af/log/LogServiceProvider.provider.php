@@ -30,7 +30,7 @@
 
 	namespace AzzurroFramework\Core\Modules\AF\Log;
 
-	use \IllgealArgumentException;
+	use \InvalidArgumentException;
 
 	use \AzzurroFramework\Core\Interfaces\Service\ServiceProviderInterface;
 
@@ -41,7 +41,7 @@
 		// Variable that contains all the configuration for the service
 		private $config;
 
-		// Constructor of the injector service
+		// Constructor
 		public function __construct() {
 			// Default settings
 			$this->config = [
@@ -61,7 +61,7 @@
 					break;
 
 				default:
-					throw new IllgealArgumentException("\$level must be a valid log level ('debug', 'info', 'warn', 'error')!");
+					throw new InvalidArgumentException("\$level must be a valid log level ('debug', 'info', 'warn', 'error')!");
 			}
 		}
 

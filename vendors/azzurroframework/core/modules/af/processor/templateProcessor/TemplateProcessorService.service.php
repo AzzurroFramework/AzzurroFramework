@@ -1,8 +1,8 @@
 <?php
 /*
-	CallbackService (callback) service
+	TemplateProcessorService (templateProcessor) service
 
-	- service that permits to register a callback to be executed
+	- service that permits to handle the template of a controller
 
 
 	---- Changelog ---
@@ -28,34 +28,29 @@
 	// Strict type hint
 	declare(strict_types = 1);
 
-	namespace AzzurroFramework\Core\Modules\AF\Callback;
+	namespace AzzurroFramework\Core\Modules\AF\Processor\TemplateProcessor;
 
 	use \InvalidArgumentException;
 
 
-	//--- CallbackService service ----
-	final class CallbackService {
+	//--- TemplateProcessorService service ----
+	final class TemplateProcessorService {
 
-		// Event to which register the callbacks
-		const EVENT_CALLBACK = "CallbackService::callback";
+		// Contructor
+		public function __construct() {
 
-		// Event service
-		private $event;
-
-
-		// Constructor
-		public function __construct($event) {
-			$this->event = $event;
 		}
 
-		// Register a callback
-		public function attach($callback) {
-			// Checking arguments correctness
-			if (!is_callable($callback) and !(is_array($callback) and (is_object($callback[0]) or class_exists($allback[0])) and method_exists($callback[0], $callback[1]))) {
-				throw new InvalidArgumentException("\$callback must be a valid callable!");
-			}
+		public function reset() {
+
+		}
+
+		public function setTemplate($tpl, $url) {
+
+		}
+
+		public function render() {
 			
-			$this->event->on(self::EVENT_CALLBACK, $callback);
 		}
 
 	}

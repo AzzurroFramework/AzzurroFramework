@@ -41,17 +41,17 @@
 	//--- CONFIG ---
 	->config(function ($azzurroProvider) {
 		// Configuring the event to start the routing
-		$azzurroProvider->setRouteEvent("AF:route");
+		$azzurroProvider->setRouteEvent("RouterService::route");
 
 		// Configuring the event to start the callbacks
-		$azzurroProvider->setCallbackEvent("AF:callback");
+		$azzurroProvider->setCallbackEvent("CallbackService::callback");
 	})
 
 	//--- RUN ---
 	->run(function ($event, $router) {
 		// Register the callback to start the event
-		$event->on("AF:route", function () use ($router) {
-			$router->route();
+		$event->on("RouterService::route", function ($server) use ($router) {
+			$router->route(preg_replace('/\&/', "?", $server->get("QUERY_STRING"), 1));
 		});
 	})
 
@@ -59,11 +59,38 @@
 	
 	// $callback service
 	->service("callback", "\AzzurroFramework\Core\Modules\AF\Callback\CallbackService")
-
 	// $log service
 	->provider("log", "\AzzurroFramework\Core\Modules\AF\Log\LogServiceProvider")
 
+	// Processor services
+	// $messageProcessor service
+	->provider("messageProcessor", "\AzzurroFramework\Core\Modules\AF\Processor\MessageProcessor\MessageProcessorServiceProvider")
+	// $templateProcessor service
+	->provider("templateProcessor", "\AzzurroFramework\Core\Modules\AF\Processor\TemplateProcessor\TemplateProcessorServiceProvider")
+
+
 	// $router service
-	->provider("router", "\AzzurroFramework\Core\Modules\AF\Router\RouterServiceProvider");
+	->provider("router", "\AzzurroFramework\Core\Modules\AF\Router\RouterServiceProvider")
+
+	
+	// Supervariable access services
+	// // $cookie service
+	// ->service("cookie", "\AzzurroFramework\Core\Modules\AF\Superglobal\Cookie\CookieService")
+	// $env service
+	->service("env", "\AzzurroFramework\Core\Modules\AF\Superglobal\Env\EnvService")
+	// $files service
+	->service("files", "\AzzurroFramework\Core\Modules\AF\Superglobal\Files\FilesService")
+	// $get service
+	->service("get", "\AzzurroFramework\Core\Modules\AF\Superglobal\Get\GetService")
+	// $global service
+	->service("global", "\AzzurroFramework\Core\Modules\AF\Superglobal\GlobalVar\GlobalVarService")
+	// $post service
+	->service("post", "\AzzurroFramework\Core\Modules\AF\Superglobal\Post\PostService")
+	// $request service
+	->service("request", "\AzzurroFramework\Core\Modules\AF\Superglobal\Request\RequestService")
+	// $server service
+	->service("server", "\AzzurroFramework\Core\Modules\AF\Superglobal\Server\ServerService");
+	// // $session service
+	// ->service("session", "\AzzurroFramework\Core\Modules\AF\Superglobal\Session\SessionService");
 
 

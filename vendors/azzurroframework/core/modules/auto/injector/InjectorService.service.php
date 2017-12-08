@@ -41,23 +41,35 @@
 		private $injector;
 
 
-		// Constructor of the injector service
+		// Constructor
 		public function __construct(Injector $injector) {
 			$this->injector = $injector;
 		}
 
 		// Get method that returns the service or constant specified
 		public function get(string $name) {
+			// Checking arguments correctness
+			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $name)) {
+				throw new InvalidArgumentException("\$app argument must be a valid service name!");
+			}
 			return $this->injector->getService($name);
 		}
 
 		// Returns the resolution of the dependencies of the callback
 		public function resolve($callback) {
+			// Checking arguments correctness
+			if (!is_callable($callback) and !(is_array($callback) and (is_object($callback[0]) or class_exists($callback[0])) and method_exists($callback[0], $callback[1]))) {
+				throw new InvalidArgumentException("\$callback must be a valid callable!");
+			}
 			return $this->injector->resolve($callback);
 		}
 
 		// Resolve the dependencies of the callaback and execute it
 		public function call($callback) {
+			// Checking arguments correctness
+			if (!is_callable($callback) and !(is_array($callback) and (is_object($callback[0]) or class_exists($callback[0])) and method_exists($callback[0], $callback[1]))) {
+				throw new InvalidArgumentException("\$callback must be a valid callable!");
+			}
 			return $this->injector->call($callback);
 		}
 
