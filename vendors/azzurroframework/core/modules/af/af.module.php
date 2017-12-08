@@ -64,9 +64,9 @@
 
 	// Processor services
 	// $messageProcessor service
-	->provider("messageProcessor", "\AzzurroFramework\Core\Modules\AF\Processor\MessageProcessor\MessageProcessorServiceProvider")
+	->provider("messageProcessor", "\AzzurroFramework\Core\Modules\AF\Processor\Message\MessageProcessorServiceProvider")
 	// $templateProcessor service
-	->provider("templateProcessor", "\AzzurroFramework\Core\Modules\AF\Processor\TemplateProcessor\TemplateProcessorServiceProvider")
+	->provider("templateProcessor", "\AzzurroFramework\Core\Modules\AF\Processor\Template\TemplateProcessorServiceProvider")
 
 
 	// $router service

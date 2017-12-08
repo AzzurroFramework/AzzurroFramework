@@ -1,8 +1,8 @@
 <?php
 /*
-	TemplateProcessorService (templateProcessor) service
+	TemplateProcessorServiceProvider (templateProcessorProvider) service
 
-	- service that permits to handle the template of a controller
+	- provider that permits to setting up the $templateProcessor service
 
 
 	---- Changelog ---
@@ -28,29 +28,27 @@
 	// Strict type hint
 	declare(strict_types = 1);
 
-	namespace AzzurroFramework\Core\Modules\AF\Processor\TemplateProcessor;
+	namespace AzzurroFramework\Core\Modules\AF\Processor\Template;
 
 	use \InvalidArgumentException;
 
+	use \AzzurroFramework\Core\Interfaces\Service\ServiceProviderInterface;
 
-	//--- TemplateProcessorService service ----
-	final class TemplateProcessorService {
 
-		// Contructor
+	//--- TemplateProcessorServiceProvider provider ----
+	final class TemplateProcessorServiceProvider implements ServiceProviderInterface {
+
+		// Variable that contains all the configuration for the service
+		private $config;
+
+
+		// Constructor
 		public function __construct() {
-
-		}
-
-		public function reset() {
-
-		}
-
-		public function setTemplate($tpl, $url) {
-
-		}
-
-		public function render() {
 			
+		}
+
+		public function get() {
+			return new TemplateProcessorService();
 		}
 
 	}

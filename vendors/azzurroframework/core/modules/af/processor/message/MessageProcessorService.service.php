@@ -28,7 +28,7 @@
 	// Strict type hint
 	declare(strict_types = 1);
 
-	namespace AzzurroFramework\Core\Modules\AF\Processor\MessageProcessor;
+	namespace AzzurroFramework\Core\Modules\AF\Processor\Message;
 
 	use \InvalidArgumentException;
 
