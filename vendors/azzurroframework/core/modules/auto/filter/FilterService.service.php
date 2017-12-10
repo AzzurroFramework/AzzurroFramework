@@ -41,7 +41,7 @@
 
 		// Constructor
 		public function __construct(Injector $injector) {
-			$this->inejctor = $injector;
+			$this->injector = $injector;
 		}
 
 		public function get(string $name) {
@@ -49,6 +49,6 @@
 			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $name)) {
 				throw new InvalidArgumentException("\$app argument must be a valid filter name!");
 			}
-			$this->injector->getFilter($name);
+			return $this->injector->getFilter($name);
 		}
 	}

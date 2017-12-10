@@ -333,7 +333,7 @@
 			$url2LastExploded = explode("?", $url2[count($url2) -1]);
 
 			// If $url2LastExploded[0] is a parameter, save it and continue processing
-			if (substr_compare($url2LastExploded[0], ":", 1, 1) === 0) {
+			if (!empty($url2LastExploded[0]) and substr_compare($url2LastExploded[0], ":", 1, 1) === 0) {
 				$params[substr($url2LastExploded[0], 1)] = $url1LastExploded[0];
 			
 			// If the $url1LastExploded[0] != $url2LastExploded[0], the urls are different

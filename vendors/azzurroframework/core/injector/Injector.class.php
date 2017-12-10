@@ -181,7 +181,7 @@
 			}
 
 			// Searching the filter
-			$filter = $this->searchService($name);
+			$filter = $this->searchFilter($name);
 			// If the filter has not been found
 			if (is_null($filter)) {
 				throw new FilterNotFoundException("Filter '$name' has not been registered!");

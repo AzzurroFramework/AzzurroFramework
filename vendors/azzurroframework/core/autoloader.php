@@ -1,6 +1,6 @@
 <?php
 /*
-	Azzurro Framework loader
+	Azzurro Framework core loader
 
 	- load core files
 	- load af module files
