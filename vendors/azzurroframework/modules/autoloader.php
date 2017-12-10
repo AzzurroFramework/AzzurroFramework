@@ -25,8 +25,14 @@
 	@url       https://github.com/alessandro1105
 */
 
-	// --- REQUIRE CORE AUTOLOADER ---
-	require_once(__DIR__ . "/core/autoloader.php");
-
-	// --- REQUIRE EXTERNAL MODULES AUTOLOADER ---
-	require_once(__DIR__ . "/modules/autoloader.php");
+	// --- LOADING THE EXTERNAL MODULES ---
+	// Scan the core modules directory
+	foreach (scandir(__DIR__) as $module) {
+		// Create the path to the current module autoloader file
+		$autoloader = __DIR__ . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . "autoloader.php";
+		// If the file exists
+		if (file_exists($autoloader) and is_file($autoloader)) {
+			// Require the autoloader file
+			require_once($autoloader);
+		}
+	}

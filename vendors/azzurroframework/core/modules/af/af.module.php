@@ -28,12 +28,7 @@
 
 	// Strict type hint
 	declare(strict_types = 1);
-
-	use \AzzurroFramework\Core\AzzurroFramework;
-
-
-	//--- GETTING INSTACE OF THE MAIN CLASS OF THE FRAMEWORK ---
-	$azzurro = AzzurroFramework::getInstance();
+	
 
 	//--- DECLARATION ---
 	$azzurro->module("af", ['auto'])

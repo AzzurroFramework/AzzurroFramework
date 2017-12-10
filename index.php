@@ -35,20 +35,17 @@
 	// Server root
 	define("__AF_ROOT__", __DIR__);
 	// Vendors directory
-	define("__AF_VENDOR_DIR__", __AF_ROOT__ . "/vendors");
+	define("__AF_VENDOR_DIR__", __AF_ROOT__ . DIRECTORY_SEPARATOR . "vendors");
 	// Azzurro Framework core directory
-	define("__AF_DIR__", __AF_VENDOR_DIR__ . "/azzurroframework");
+	define("__AF_DIR__", __AF_VENDOR_DIR__ . DIRECTORY_SEPARATOR . "azzurroframework");
 	// Logs directory
-	define("__AF_LOGS_DIR__", __AF_ROOT__ . "/logs");
+	define("__AF_LOGS_DIR__", __AF_ROOT__ . DIRECTORY_SEPARATOR . "logs");
 	// User application directory
-	define("__AF_APP_DIR__", __AF_ROOT__ . "/app");
+	define("__AF_APP_DIR__", __AF_ROOT__ . DIRECTORY_SEPARATOR . "app");
 
 	
 	//--- LOAD AZZURRO FRAMEWORK ---
 	require_once(__AF_DIR__ . "/autoloader.php");
-
-	//--- INSTANTIATE THE FRAMEWORK ---
-	$azzurro = AzzurroFramework::getInstance();
 
 	//--- LOAD USER APPLICATION ---
 	require_once(__AF_APP_DIR__ . "/autoloader.php");
