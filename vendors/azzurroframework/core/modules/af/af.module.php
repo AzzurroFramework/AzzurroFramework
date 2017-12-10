@@ -65,8 +65,8 @@
 	->provider("router", "\AzzurroFramework\Core\Modules\AF\Router\RouterServiceProvider")
 	
 	// Supervariable access services
-	// // $cookie service
-	// ->service("cookie", "\AzzurroFramework\Core\Modules\AF\Superglobal\Cookie\CookieService")
+	// $cookie service
+	 ->service("cookie", "\AzzurroFramework\Core\Modules\AF\Superglobal\Cookie\CookieService")
 	// $env service
 	->service("env", "\AzzurroFramework\Core\Modules\AF\Superglobal\Env\EnvService")
 	// $files service
@@ -81,8 +81,8 @@
 	->service("request", "\AzzurroFramework\Core\Modules\AF\Superglobal\Request\RequestService")
 	// $server service
 	->service("server", "\AzzurroFramework\Core\Modules\AF\Superglobal\Server\ServerService")
-	// // $session service
-	// ->service("session", "\AzzurroFramework\Core\Modules\AF\Superglobal\Session\SessionService");
+	// $session service
+	->service("session", "\AzzurroFramework\Core\Modules\AF\Superglobal\Session\SessionService")
 
 	// $template service
 	->service("template", "\AzzurroFramework\Core\Modules\AF\Template\TemplateService");
