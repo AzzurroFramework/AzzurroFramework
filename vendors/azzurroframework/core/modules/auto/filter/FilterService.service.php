@@ -2,12 +2,7 @@
 /*
 	FilterService (filter) service
 
-	- service that permits to use filters into the application
-
-
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	Service that permits to obtain an use a filter
 
 
 	Copyright 2017 Alessandro Pasqualini

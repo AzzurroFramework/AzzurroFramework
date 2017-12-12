@@ -2,12 +2,8 @@
 /*
 	Injector class
 
-	- resolve the dependency injection of the application
-
-
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	The injector is the base component of the framework. It resolve the dependency injection
+	and create the varius components.
 
 
 	Copyright 2017 Alessandro Pasqualini

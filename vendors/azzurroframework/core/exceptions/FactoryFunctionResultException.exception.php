@@ -2,9 +2,7 @@
 /*
 	FactoryFunctionResultException
 
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	Raised when the result of the factory function is not an object.
 
 
 	Copyright 2017 Alessandro Pasqualini
@@ -23,6 +21,7 @@
 */
 
 	namespace AzzurroFramework\Core\Exceptions;
+	
 	use \Exception;
 	
 

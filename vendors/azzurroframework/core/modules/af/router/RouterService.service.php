@@ -2,7 +2,7 @@
 /*
 	RouterService (router) service
 
-	- service that permits to use the router
+	One of the main components of the framework, it routes the request and call the specific controller.
 
 
 	---- Changelog ---
@@ -79,9 +79,9 @@
 
 		// Method that route the request
 		public function route(string $url) {
-			//check the argument correctness
-			if (!preg_match("/^(\/[a-zA-Z0-9_]+)*(\/|(\/?\?[a-zA-Z0-9_]+(\=?[^\&]+)?(\&[a-zA-Z0-9_]+(\=?[^\&]+)?)*))?$/", $url)) { // Url must be a valid url path
-				throw new InvalidArgumentException("\$url must be a valid url path!");
+			// If $url is empty, use "/" instead
+			if (empty($url)) {
+				$url = "/";
 			}
 
 			// Check if the current url is different from the one just passed (no recursion) and the first rute has happened
@@ -137,7 +137,7 @@
 		// Method to change the current state
 		public function go(string $name, array $params = null) {
 			// Check if the name is valid
-			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $state['name'])) {
+			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $name)) {
 				InvalidArgumentException("'name' field must be a valid state name!");
 			}
 			if (!is_null($params)) {
@@ -160,7 +160,7 @@
 		}
 
 		// Return the specific restful parameter without ':'
-		public function getParameter(string $name) {
+		public function getParam(string $name) {
 			// Check if there are params
 			if (is_null($this->current['params'])) {
 				return null;
@@ -187,12 +187,19 @@
 					}
 
 					// Copy the state field
-					$current[$key] = $value;
+					$current['state'][$key] = $value;
 				}
 			}
 
+			// Adding url to current
+			$current['url'] = $this->current['url'];
+			if (!is_null($this->current['params'])) {
+				$current['params'] = $this->current['params'];
+			}
+			
+
 			// Return the current state
-			return $state;
+			return $current;
 		}
 		
 
@@ -202,22 +209,29 @@
 			$this->current['state'] = $state;
 
 			// Getting the template processor
-			$processor = $this->injector->get($this->config['templateProcessor']);
+			$template = $this->injector->get($this->config['templateProcessor']);
 			// Reset the template processor
-			$processor->reset();
+			$template->reset();
 			// Setting up the template
 			if (isset($state['template'])) {
-				$processor->setTemplate($state['template'], false);
+				$template->setTemplate($state['template'], false);
 			} else if (isset($state['templateUrl'])) {
-				$processor->setTemplate($state['templateUrl'], true);
+				$template->setTemplate($state['templateUrl'], true);
 			}
 
-			// Execute the controller
-			$render = $this->controller->execute($state['controller']);
+			// If the controller is defined inside the state
+			if (isset($state['controller'])) {
+				// Execute the controller
+				$render = $this->controller->execute($state['controller']);
 
-			// If the controller wants to render it's view
-			if ($render) {
-				$processor->render();
+				// If the controller wants to render it's view
+				if ($render) {
+					$template->render(true);
+				}
+
+			// If the controller is not specified render the template without processing it
+			} else {
+				$template->render(false);
 			}
 		}
 
@@ -248,6 +262,9 @@
 				}
 
 			}
+			
+			// Reset params array
+			$this->current['params'] = null;
 
 			// No condition has been found
 			return null;
@@ -317,7 +334,7 @@
 			// Check all the url parts, if one of these is different the urls are different
 			for ($i = 0; $i < count($url1) -1; $i++) {
 				// If url2 is a parameter, save it and continue
-				if (substr_compare($url2[$i], ":", 1, 1) === 0) {
+				if (substr_compare($url2[$i], ":", 0, 1) === 0) {
 					$params[substr($url2[$i], 1)] = $url1[$i];
 					continue;
 				}
@@ -333,7 +350,7 @@
 			$url2LastExploded = explode("?", $url2[count($url2) -1]);
 
 			// If $url2LastExploded[0] is a parameter, save it and continue processing
-			if (!empty($url2LastExploded[0]) and substr_compare($url2LastExploded[0], ":", 1, 1) === 0) {
+			if (!empty($url2LastExploded[0]) and substr_compare($url2LastExploded[0], ":", 0, 1) === 0) {
 				$params[substr($url2LastExploded[0], 1)] = $url1LastExploded[0];
 			
 			// If the $url1LastExploded[0] != $url2LastExploded[0], the urls are different

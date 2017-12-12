@@ -2,12 +2,7 @@
 /*
 	Module class
 
-	- define the module class
-	- instantiate the restricted access class
-
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	This class defines a module and permits the registration of the components.
 
 
 	Copyright 2017 Alessandro Pasqualini

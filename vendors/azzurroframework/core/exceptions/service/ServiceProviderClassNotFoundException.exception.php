@@ -2,9 +2,7 @@
 /*
 	ServiceProviderClassNotFoundException
 
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	aised when the framework tries to instantiate the provider but the class cannot be found
 
 
 	Copyright 2017 Alessandro Pasqualini
@@ -23,6 +21,7 @@
 */
 
 	namespace AzzurroFramework\Core\Exceptions\Service;
+	
 	use \InvalidArgumentException;
 	
 	

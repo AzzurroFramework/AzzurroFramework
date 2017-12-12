@@ -2,12 +2,7 @@
 /*
 	AzzurroServiceProvider (azzurroProvider) service
 
-	- provider that permits to configurate the framework
-
-
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	Service provider for $azzurro, it can be used to configure the framework.
 
 
 	Copyright 2017 Alessandro Pasqualini

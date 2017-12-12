@@ -2,9 +2,7 @@
 /*
 	ServiceNotFoundException
 
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	Raised when the framework cannot find the service
 
 
 	Copyright 2017 Alessandro Pasqualini
@@ -23,6 +21,7 @@
 */
 
 	namespace AzzurroFramework\Core\Exceptions\Service;
+	
 	use \InvalidArgumentException;
 	
 

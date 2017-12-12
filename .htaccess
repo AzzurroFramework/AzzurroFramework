@@ -1,24 +1,10 @@
 <IfModule mod_rewrite.c>
+RewriteEngine On
 
-	#DirectoryIndex
+# Enable this option to do not redirect the request to index.php for the "assets/" directory.
+# Change {{BASE}} with your base url
+#RewriteCond %{REQUEST_URI} !^/{{BASE}}/assets/
 
-	#Options +FollowSymlinks
-
-	RewriteEngine On
-	#RewriteBase /
-
-	#redirect to https
-	#RewriteCond %{HTTPS} off
-	#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-	#rewrite rule azzurro
-	RewriteCond %{ENV:REDIRECT_STATUS} !200 
-	RewriteRule ^(.*)$ index.php?/$1 [L,QSA]
-
+RewriteCond %{ENV:REDIRECT_STATUS} !200
+RewriteRule ^(.*)$ index.php/$1 [L,QSA,NC]
 </IfModule>
-
-#Cross Site Script
-#<IfModule mod_headers.c>
-#   Header set Access-Control-Allow-Origin "http://localhost"
-#   Header set Access-Control-Allow-Credentials true
-#</IfModule>

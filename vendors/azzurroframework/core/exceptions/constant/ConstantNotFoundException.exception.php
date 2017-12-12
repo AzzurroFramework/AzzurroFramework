@@ -2,9 +2,7 @@
 /*
 	ConstantNotFoundException
 
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	Raised when the framework cannot find the constant.
 
 
 	Copyright 2017 Alessandro Pasqualini
@@ -23,6 +21,7 @@
 */
 
 	namespace AzzurroFramework\Core\Exceptions\Constant;
+	
 	use \InvalidArgumentException;
 	
 

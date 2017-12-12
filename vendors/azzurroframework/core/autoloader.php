@@ -2,12 +2,7 @@
 /*
 	Azzurro Framework core loader
 
-	- load core files
-	- load af module files
-
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	Load the core files and the core modules.
 
 
 	Copyright 2017 Alessandro Pasqualini

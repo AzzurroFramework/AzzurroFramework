@@ -2,12 +2,7 @@
 /*
 	EnvService (env) service
 
-	- service that permits to access and handle superglobal variable $_ENV
-
-
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	Service that permits to access $_ENV.
 
 
 	Copyright 2017 Alessandro Pasqualini
@@ -54,7 +49,7 @@
 		}
 
 		// Check if the requested key exists
-		public function isSet(string $name) {
+		public function isset(string $name) {
 			return isset($this->env[$name]);
 		}
 

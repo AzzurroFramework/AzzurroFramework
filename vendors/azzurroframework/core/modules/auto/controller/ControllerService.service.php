@@ -2,12 +2,7 @@
 /*
 	ControllerService (controller) service
 
-	- service that permits to execute a controller
-
-
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	Service used execute a controller.
 
 
 	Copyright 2017 Alessandro Pasqualini

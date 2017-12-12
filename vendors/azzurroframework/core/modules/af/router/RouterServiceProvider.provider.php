@@ -2,12 +2,7 @@
 /*
 	RouterServiceProvider (routerProvider) service
 
-	- provider that permits to setting up the $router service
-
-
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	Service provider for $router service. It can register states, when conditions or one otherwhise condition.
 
 
 	Copyright 2017 Alessandro Pasqualini
@@ -68,10 +63,6 @@
 
 		// Register a state
 		public function state(array $state) {
-			// Check the mandatory field of the state
-			if (!isset($state['controller'])) { // Controller field is mandatory
-				throw new InvalidArgumentException("'controller' field is mandatory, you must defined it into the state!");
-			}
 			// url
 			if (isset($state['url']) and !preg_match("/^(\/(\:?[a-zA-Z0-9_]+))*(\/|(\/?\?[a-zA-Z0-9_]+(\&[a-zA-Z0-9_]+)*))?$/", $state['url'])) {
 				throw new InvalidArgumentException("\$url must be a valid url path!");
@@ -90,7 +81,7 @@
 				}
 			}
 			// controller
-			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $state['controller'])) {
+			if (isset($state['controller']) and !preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $state['controller'])) {
 				throw new InvalidArgumentException("'controller' field must be a valid controller name!");
 			}
 			// template

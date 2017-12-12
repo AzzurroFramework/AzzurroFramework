@@ -2,12 +2,7 @@
 /*
 	Azzurro Framework loader
 
-	- load core files
-	- load af module files
-
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	This autoloader file requires the external module autoloader and the core autoloader files.
 
 
 	Copyright 2017 Alessandro Pasqualini

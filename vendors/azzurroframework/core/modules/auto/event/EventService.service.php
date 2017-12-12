@@ -2,12 +2,7 @@
 /*
 	EventService (event) service
 
-	- service that permits to register callbacks to specific events
-
-
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	Service used to generate and handle events.
 
 
 	Copyright 2017 Alessandro Pasqualini

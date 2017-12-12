@@ -28,10 +28,10 @@
 
 	use \AzzurroFramework\Core\AzzurroFramework;
 
-	//--- VERSION ---
+	// --- VERSION ---
 	define("__AF_VERSION__", "0.0.1-pre-alfa");
 
-	//--- PATH CONSTANTS ---
+	// --- PATH CONSTANTS ---
 	// Server root
 	define("__AF_ROOT__", __DIR__);
 	// Vendors directory
@@ -44,11 +44,11 @@
 	define("__AF_APP_DIR__", __AF_ROOT__ . DIRECTORY_SEPARATOR . "app");
 
 	
-	//--- LOAD AZZURRO FRAMEWORK ---
+	// --- LOAD AZZURRO FRAMEWORK ---
 	require_once(__AF_DIR__ . "/autoloader.php");
 
-	//--- LOAD USER APPLICATION ---
+	// --- LOAD USER APPLICATION ---
 	require_once(__AF_APP_DIR__ . "/app.php");
 
-	//--- BOOTSTRAP THE FRAMEWORK ---
+	// --- BOOTSTRAP THE FRAMEWORK ---
 	$azzurro->boostrap();

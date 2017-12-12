@@ -2,9 +2,7 @@
 /*
 	ModuleConfigAlreadyRegisteredException
 
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	Raised when there is already a config function defined for the module.
 
 
 	Copyright 2017 Alessandro Pasqualini
@@ -23,9 +21,10 @@
 */
 
 	namespace AzzurroFramework\Core\Exceptions\Module;
+
 	use \InvalidArgumentException;
 	
-	// Throwed when the user tries to retrive a nonregistered module
+
 	class ModuleConfigAlreadyRegisteredException extends InvalidArgumentException {
 
 	}

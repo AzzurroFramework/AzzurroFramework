@@ -2,9 +2,7 @@
 /*
 	ModuleRunAlreadyRegisteredException
 
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	Raised when there is already a run function defined for the module.
 
 
 	Copyright 2017 Alessandro Pasqualini
@@ -23,9 +21,10 @@
 */
 
 	namespace AzzurroFramework\Core\Exceptions\Module;
+
 	use \InvalidArgumentException;
 	
-	// Throwed when the user tries to retrive a nonregistered module
+
 	class ModuleRunAlreadyRegisteredException extends InvalidArgumentException {
 
 	}

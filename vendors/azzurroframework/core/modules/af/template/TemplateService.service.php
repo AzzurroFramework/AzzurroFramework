@@ -70,15 +70,18 @@
 		}
 
 		// Render the template
-		public function render() {
+		public function render(bool $process) {
 			// If the template has not been 
 			if (is_null($this->template)) {
 				throw new TemplateNotSetException("The template has not been set!");
 			}
 
-			// Replace the parameters inside the template
-			foreach ($this->parameters as $key => $value) {
-				$this->template = preg_replace('/{{' . $key . '}}/', "" . $value, $this->template);
+			// If the template must be processed
+			if ($process) {
+				// Replace the parameters inside the template
+				foreach ($this->parameters as $key => $value) {
+					$this->template = preg_replace('/{{' . $key . '}}/', "" . $value, $this->template);
+				}
 			}
 			
 			// Print the template

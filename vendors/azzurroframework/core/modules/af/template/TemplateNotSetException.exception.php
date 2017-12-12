@@ -2,9 +2,7 @@
 /*
 	TemplateNotSetException
 
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	Raised when the service $template tries to render a template before it has been set.
 
 
 	Copyright 2017 Alessandro Pasqualini
@@ -25,8 +23,8 @@
 	namespace AzzurroFramework\Core\Modules\AF\Template;
 	
 	use \Exception;
+
 	
-	// Throwed when the user tries to retrive a nonregistered module
 	class TemplateNotSetException extends Exception {
 
 	}

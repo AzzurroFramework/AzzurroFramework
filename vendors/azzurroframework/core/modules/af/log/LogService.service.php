@@ -2,12 +2,7 @@
 /*
 	LogService (log) service
 
-	- service that permits use the $log service into the application
-
-
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	Service that permits to log information into a file.
 
 
 	Copyright 2017 Alessandro Pasqualini
@@ -39,7 +34,7 @@
 	final class LogService {
 
 		// File into wich the log messages will be written
-		const LOG_FILE = __AF_LOGS_DIR__ . "log.txt";
+		const LOG_FILE = __AF_LOGS_DIR__ . "/log.txt";
 
 		// Variable that contains all the configuration for the service
 		private $config;
@@ -52,14 +47,14 @@
 
 		// Log message
 		public function log(string $message) {
-			error_log($message . "\n\n", 3, $filename);
+			error_log($message . "\n", 3, self::LOG_FILE);
 		}
 
 		// Log info message
 		public function info(string $message) {
 			// If the log message can be logged
 			if ($this->logLevel($this->config['level']) <= $this->logLevel('info')) {
-				error_log($message . "\n\n", 3, $filename);
+				error_log($message . "\n", 3, self::LOG_FILE);
 			}
 		}
 
@@ -67,7 +62,7 @@
 		public function warn(string $message) {
 			// If the log message can be logged
 			if ($this->logLevel($this->config['level']) <= $this->logLevel('warn')) {
-				error_log($message . "\n\n", 3, $filename);
+				error_log($message . "\n", 3, self::LOG_FILE);
 			}
 		}
 
@@ -75,7 +70,7 @@
 		public function error(string $message) {
 			// If the log message can be logged
 			if ($this->logLevel($this->config['level']) <= $this->logLevel('error')) {
-				error_log($message . "\n\n", 3, $filename);
+				error_log($message . "\n", 3, self::LOG_FILE);
 			}
 		}
 
@@ -83,7 +78,7 @@
 		public function debug(string $message) {
 			// If the log message can be logged
 			if ($this->logLevel($this->config['level']) <= $this->logLevel('debug')) {
-				error_log($message . "\n\n", 3, $filename);
+				error_log($message . "\n", 3, self::LOG_FILE);
 			}
 		}
 

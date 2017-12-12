@@ -2,9 +2,7 @@
 /*
 	ServiceProviderResultException
 
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	Raised when the result of the get function of the provider is not an object nor a factory function
 
 
 	Copyright 2017 Alessandro Pasqualini
@@ -23,6 +21,7 @@
 */
 
 	namespace AzzurroFramework\Core\Exceptions\Service;
+	
 	use \Exception;
 	
 

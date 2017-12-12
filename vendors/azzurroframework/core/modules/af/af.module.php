@@ -1,14 +1,8 @@
 <?php
 /*
-	af module declaration and registration of all the components
+	af module declaration
 
-	- declaration of 'af' module
-	- registration components of the module
-
-
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	This script will register the components of the af module into the framework.
 
 
 	Copyright 2017 Alessandro Pasqualini
@@ -30,10 +24,10 @@
 	declare(strict_types = 1);
 	
 
-	//--- DECLARATION ---
+	// --- DECLARATION ---
 	$azzurro->module("af", ['auto'])
 
-	//--- CONFIG ---
+	// --- CONFIG ---
 	->config(function ($azzurroProvider) {
 		// Configuring the event to start the routing
 		$azzurroProvider->setRouteEvent("RouterService::route");
@@ -42,26 +36,40 @@
 		$azzurroProvider->setCallbackEvent("CallbackService::callback");
 	})
 
-	//--- RUN ---
-	->run(function ($event, $router) {
-		// Register the callback to start the event
-		$event->on("RouterService::route", function ($server) use ($router) {
-			$router->route(preg_replace('/\&/', "?", $server->get("QUERY_STRING"), 1));
+	// --- RUN ---
+	->run(function ($event) {
+		// Register the callback to start the route
+		$event->on("RouterService::route", function ($server, $router) {
+			// Getting the path of the request
+			$url = $server->get("PATH_INFO");
+			// If the query string is not empty
+			if (!empty($server->get("QUERY_STRING"))) {
+				$url .= "?" . $server->get("QUERY_STRING");
+			}
+			// Removed "/index.php"
+			if (strlen($url) >= 10 and substr_compare($url, "/index.php", 0, 10) === 0) {
+				$url = substr($url, 10);
+			}
+			// Check if the url is empty
+			if (empty($url)) {
+				$url = "/";
+			}
+
+			// Route the request
+			$router->route($url);
 		});
 	})
 
-	//--- SERVICES ----
+	// --- SERVICES ----
 	
-	// $callback service
-	->service("callback", "\AzzurroFramework\Core\Modules\AF\Callback\CallbackService")
 	// $log service
 	->provider("log", "\AzzurroFramework\Core\Modules\AF\Log\LogServiceProvider")
 	// $router service
 	->provider("router", "\AzzurroFramework\Core\Modules\AF\Router\RouterServiceProvider")
 	
-	// Supervariable access services
+	// Superglobal variable services
 	// $cookie service
-	 ->service("cookie", "\AzzurroFramework\Core\Modules\AF\Superglobal\Cookie\CookieService")
+	->service("cookie", "\AzzurroFramework\Core\Modules\AF\Superglobal\Cookie\CookieService")
 	// $env service
 	->service("env", "\AzzurroFramework\Core\Modules\AF\Superglobal\Env\EnvService")
 	// $files service

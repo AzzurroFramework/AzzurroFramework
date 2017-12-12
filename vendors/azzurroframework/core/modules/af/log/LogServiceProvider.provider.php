@@ -2,12 +2,7 @@
 /*
 	LogServiceProvider (logProvider) service
 
-	- provider that permits to setting up the $log service
-
-
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	Service provider to configure $log service.
 
 
 	Copyright 2017 Alessandro Pasqualini

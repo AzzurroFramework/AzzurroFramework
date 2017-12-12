@@ -2,13 +2,8 @@
 /*
 	InjectorService (injector) service
 
-	- service that permits dependency injection
-	- registration throw factory function 
-
-
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	Injector service, it exponse the dependency injection resolution for service and constant.
+	It can be used to call a function wich depends on services or constants.
 
 
 	Copyright 2017 Alessandro Pasqualini

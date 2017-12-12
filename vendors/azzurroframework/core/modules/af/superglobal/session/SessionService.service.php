@@ -2,12 +2,7 @@
 /*
 	SessionService (session) service
 
-	- service that permits to access and handle cookies
-
-
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	Service that permits to handle the session.
 
 
 	Copyright 2017 Alessandro Pasqualini
@@ -47,13 +42,18 @@
 		}
 
 		// Return the requested cookie
-		public function get(string $name) {
+		public function get($name) {
 			return $this->session[$name];
 		}
 
 		// Check if the requested cookie exists
-		public function isSet(string $name) {
+		public function isset($name) {
 			return isset($this->session[$name]);
+		}
+
+		// Set the data
+		public function set($name, $value) {
+			$this->session[$name] = $value;
 		}
 
 		// Start the session

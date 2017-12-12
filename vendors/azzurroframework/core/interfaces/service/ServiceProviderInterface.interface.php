@@ -2,11 +2,7 @@
 /*
 	ServiceProviderInterface
 
-	- define the methods that AzzurroFramework wil use
-
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	Defines the methods of a service provider that the framework will use.
 
 
 	Copyright 2017 Alessandro Pasqualini
@@ -24,7 +20,11 @@
 	@url       https://github.com/alessandro1105
 */
 
+	// Strict type hint
+	declare(strict_types = 1);
+	
 	namespace AzzurroFramework\Core\Interfaces\Service;
+
 
 	//--- ServiceProviderInterface interface ----
 	interface ServiceProviderInterface {

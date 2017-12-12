@@ -2,13 +2,9 @@
 /*
 	CallbackService (callback) service
 
-	- service that permits to register a callback to be executed
-
-
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
-
+	Service based on $event service that permits to register a callback function that will be executed
+	in the sutdown phase of the framework.
+	
 
 	Copyright 2017 Alessandro Pasqualini
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,14 +26,13 @@
 
 	namespace AzzurroFramework\Core\Modules\AF\Callback;
 
+	use \AzzurroFramework\Core\AzzurroFramework;
+
 	use \InvalidArgumentException;
 
 
 	//--- CallbackService service ----
 	final class CallbackService {
-
-		// Event to which register the callbacks
-		const EVENT_CALLBACK = "CallbackService::callback";
 
 		// Event service
 		private $event;
@@ -55,7 +50,7 @@
 				throw new InvalidArgumentException("\$callback must be a valid callable!");
 			}
 			
-			$this->event->on(self::EVENT_CALLBACK, $callback);
+			$this->event->on(AzzurroFramework::EVENT_CALLBACK, $callback);
 		}
 
 	}

@@ -2,9 +2,7 @@
 /*
 	ModuleAlreadyRegisteredException
 
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	Raised when there is already a module registered with the same name.
 
 
 	Copyright 2017 Alessandro Pasqualini
@@ -23,9 +21,10 @@
 */
 
 	namespace AzzurroFramework\Core\Exceptions\Module;
+
 	use \InvalidArgumentException;
 	
-	// Throwed when the user tries to register a module already registered
+
 	class ModuleAlreadyRegisteredException extends InvalidArgumentException {
 		
 	}

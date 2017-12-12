@@ -2,12 +2,7 @@
 /*
 	CookieService (cookie) service
 
-	- service that permits to access and handle cookies
-
-
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	Service that permits to handle cookies.
 
 
 	Copyright 2017 Alessandro Pasqualini
@@ -52,7 +47,7 @@
 		}
 
 		// Check if the requested cookie exists
-		public function isSet(string $name) {
+		public function isset(string $name) {
 			return isset($this->cookie[$name]);
 		}
 

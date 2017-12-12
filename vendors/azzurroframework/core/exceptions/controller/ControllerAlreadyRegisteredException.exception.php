@@ -1,10 +1,8 @@
 <?php
 /*
 	ControllerAlreadyRegisteredException
-
-	---- Changelog ---
-	Rev 1.0 - November 20th, 2017
-			- Basic functionality
+	
+	Raised when there is already a controller registered with the same name inside the module.
 
 
 	Copyright 2017 Alessandro Pasqualini
@@ -23,6 +21,7 @@
 */
 
 	namespace AzzurroFramework\Core\Exceptions\Controller;
+	
 	use \InvalidArgumentException;
 	
 
