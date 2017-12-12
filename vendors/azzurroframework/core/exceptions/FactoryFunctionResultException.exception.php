@@ -25,7 +25,7 @@
 	namespace AzzurroFramework\Core\Exceptions;
 	use \Exception;
 	
-	// Throwed when the user tries to retrive a nonregistered module
+
 	class FactoryFunctionResultException extends Exception {
 
 	}

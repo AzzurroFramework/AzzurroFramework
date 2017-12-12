@@ -25,7 +25,7 @@
 	namespace AzzurroFramework\Core\Exceptions\Constant;
 	use \InvalidArgumentException;
 	
-	// Throwed when the user tries to retrive a nonregistered module
+
 	class ConstantNotFoundException extends InvalidArgumentException {
 		
 	}

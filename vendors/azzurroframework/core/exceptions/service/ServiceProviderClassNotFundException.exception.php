@@ -1,6 +1,6 @@
 <?php
 /*
-	ConstantAlreadyRegisteredException
+	ServiceProviderClassNotFoundException
 
 	---- Changelog ---
 	Rev 1.0 - November 20th, 2017
@@ -22,10 +22,10 @@
 	@url       https://github.com/alessandro1105
 */
 
-	namespace AzzurroFramework\Core\Exceptions\Constant;
+	namespace AzzurroFramework\Core\Exceptions\Service;
 	use \InvalidArgumentException;
 	
-
-	class ConstantAlreadyRegisteredException extends InvalidArgumentException {
+	
+	class ServiceProviderClassNotFoundException extends InvalidArgumentException {
 
 	}

@@ -25,7 +25,7 @@
 	namespace AzzurroFramework\Core\Exceptions\Controller;
 	use \InvalidArgumentException;
 	
-	// Throwed when the user tries to retrive a nonregistered module
+
 	class ControllerAlreadyRegisteredException extends InvalidArgumentException {
 
 	}

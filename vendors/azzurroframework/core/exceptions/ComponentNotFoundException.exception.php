@@ -25,7 +25,7 @@
 	namespace AzzurroFramework\Core\Exceptions;
 	use \Exception;
 	
-	// Throwed when the user tries to register a component already registered
+
 	class ComponentNotFoundException extends Exception {
 
 	}

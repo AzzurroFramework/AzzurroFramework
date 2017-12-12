@@ -34,16 +34,22 @@
 	use \AzzurroFramework\Core\Exceptions\ComponentNotFoundException;
 	use \AzzurroFramework\Core\Exceptions\FactoryFunctionResultException;
 	use \AzzurroFramework\Core\Exceptions\Constant\ConstantNotFoundException;
+	use \AzzurroFramework\Core\Exceptions\Controller\ControllerClassNotFoundException;
 	use \AzzurroFramework\Core\Exceptions\Controller\ControllerNotFoundException;
 	use \AzzurroFramework\Core\Exceptions\Filter\FilterNotFoundException;
 	use \AzzurroFramework\Core\Exceptions\Module\ModuleNotFoundException;
+	use \AzzurroFramework\Core\Exceptions\Service\ServiceClassNotFoundException;
 	use \AzzurroFramework\Core\Exceptions\Service\ServiceNotFoundException;
+	use \AzzurroFramework\Core\Exceptions\Service\ServiceProviderClassNotFoundException;
+	use \AzzurroFramework\Core\Exceptions\Service\ServiceProviderClassNotValidException;
 	use \AzzurroFramework\Core\Exceptions\Service\ServiceProviderNotFoundException;
 	use \AzzurroFramework\Core\Exceptions\Service\ServiceProviderResultException;
 
 	use \ReflectionFunction;
 	use \ReflectionMethod;
 	use \ReflectionClass;
+
+	use \AzzurroFramework\Core\Interfaces\Service\ServiceProviderInterface;
 
 
 	//--- Injector class ----
@@ -244,8 +250,16 @@
 								} else if (isset($service['provider'])) {
 									// Check if the provider has been alredy instantiate
 									if (isset($service['class'])) {
+										// Check if the class exists
+										if (!class_exists($service['class'])) {
+											throw new ServiceProviderClassNotFoundException("Service provider class '" . $service['class'] . "' not found!");
+										}
 										// Instantiate the provider
 										$service['provider'] = new $service['class']();
+										// Check if the class implements ServiceProviderInterface
+										if (!($service['provider'] instanceof ServiceProviderInterface)) {
+											throw new ServiceProviderClassNotValidException("Service provider class '" . $service['class'] . "' not implements 'ServiceProviderInterface'!");
+										}
 										unset($service['class']);
 									}
 									// Getting the result of the provider get function
@@ -268,6 +282,10 @@
 								
 								// If the service is registered with the service function
 								} else if (isset($service['class'])) {
+									// Check if the class exists
+									if (!class_exists($service['class'])) {
+										throw new ServiceClassNotFoundException("Service class '" . $service['class'] . "' not found!");
+									}
 									// Resolve dependencies of the constructor
 									$arguments = $this->resolve(array($service['class'], "__construct"));
 
@@ -301,8 +319,16 @@
 						if ($serviceName == $name and isset($service['provider'])) {
 							// Check if the provider has been alredy instantiate
 							if (isset($service['class'])) {
+								// Check if the class exists
+								if (!class_exists($service['class'])) {
+									throw new ServiceProviderClassNotFoundException("Service provider class '" . $service['class'] . "' not found!");
+								}
 								// Instantiate the provider
 								$service['provider'] = new $service['class']();
+								// Check if the class implements ServiceProviderInterface
+								if (!($service['provider'] instanceof ServiceProviderInterface)) {
+									throw new ServiceProviderClassNotValidException("Service provider class '" . $service['class'] . "' not implements 'ServiceProviderInterface'!");
+								}
 								unset($service['class']);
 							}
 							// Return the provider
@@ -377,6 +403,10 @@
 						// If the service name is the one needed to be found
 						if ($controllerName == $name) {
 							if (!isset($controller['controller'])) {
+								// Check if the class exists
+								if (!class_exists($controller['class'])) {
+									throw new ControllerClassNotFoundException("Controller class '" . $controller['class'] . "' not found!"); 
+								}
 								// Instanstiare the controller
 								$reflection = new ReflectionClass($controller['class']);
 								$controller['controller'] = $reflection->newInstance();

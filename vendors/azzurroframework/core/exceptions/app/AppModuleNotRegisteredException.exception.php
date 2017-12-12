@@ -25,7 +25,7 @@
 	namespace AzzurroFramework\Core\Exceptions\App;
 	use \Exception;
 	
-	// Throwed when the user tries to retrive a nonregistered module
+
 	class AppModuleNotRegisteredException extends Exception {
 
 	}

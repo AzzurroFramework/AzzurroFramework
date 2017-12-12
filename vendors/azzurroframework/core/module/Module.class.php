@@ -87,8 +87,8 @@
 			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $name)) {
 				throw new InvalidArgumentException("\$name argument must be a valid service name!");
 			}
-			if (!class_exists($class)) {
-				throw new InvalidArgumentException("\$class argument must be a valid class!");
+			if (!preg_match('/^(\\\[a-zA-Z_\x7f-\xff]|[a-zA-Z_\x7f-\xff])[a-zA-Z0-9_\x7f-\xff\\\\]*$/', $class)) {
+				throw new InvalidArgumentException("\$class argument must be a valid class name!");
 			}
 			// Check if there is already registered a service with this name
 			if (array_key_exists('services', $this->module) and array_key_exists($name, $this->module['services'])) {
@@ -136,8 +136,8 @@
 			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $name)) {
 				throw new InvalidArgumentException("\$name argument must be a valid service name!");
 			}
-			if (!class_exists($class) and !in_array("AzzurroFramework\Core\Interfaces\Service\ServiceProviderInterface", class_implements($class))) {
-				throw new InvalidArgumentException("\$class must be a valid class that implements ServiceProviderInterface!");
+			if (!preg_match('/^(\\\[a-zA-Z_\x7f-\xff]|[a-zA-Z_\x7f-\xff])[a-zA-Z0-9_\x7f-\xff\\\\]*$/', $class)) {
+				throw new InvalidArgumentException("\$class argument must be a valid class name!");
 			}
 			// Check if there is already registered a service with this name
 			if (array_key_exists('services', $this->module) and array_key_exists($name, $this->module['services'])) {
@@ -186,8 +186,8 @@
 			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $name)) {
 				throw new InvalidArgumentException("\$name argument must be a valid controller name!");
 			}
-			if (!class_exists($class)) {
-				throw new InvalidArgumentException("\$class argument must be a valid class!");
+			if (!preg_match('/^(\\\[a-zA-Z_\x7f-\xff]|[a-zA-Z_\x7f-\xff])[a-zA-Z0-9_\x7f-\xff\\\\]*$/', $class)) {
+				throw new InvalidArgumentException("\$class argument must be a valid class name!");
 			}
 			// Check if there is already registered a controller with this name
 			if (array_key_exists('controllers', $this->module) and array_key_exists($name, $this->module['controllers'])) {

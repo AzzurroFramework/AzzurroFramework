@@ -32,7 +32,7 @@
 
 	use \InvalidArgumentException;
 
-	use TemplateNotSetExpection;
+	use AzzurroFramework\Core\Modules\AF\Template\TemplateNotSetException;
 
 
 	//--- TemplateService service ----
@@ -73,7 +73,7 @@
 		public function render() {
 			// If the template has not been 
 			if (is_null($this->template)) {
-				throw new TemplateNotSetExpection("The template has not been set!");
+				throw new TemplateNotSetException("The template has not been set!");
 			}
 
 			// Replace the parameters inside the template

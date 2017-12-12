@@ -25,7 +25,7 @@
 	namespace AzzurroFramework\Core\Exceptions\Service;
 	use \Exception;
 	
-	// Throwed when the user tries to retrive a nonregistered module
+
 	class ServiceProviderResultException extends Exception {
 
 	}
