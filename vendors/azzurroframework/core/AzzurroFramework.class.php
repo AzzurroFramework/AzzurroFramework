@@ -47,6 +47,11 @@
 	//--- AzzurroFramework class ----
 	final class AzzurroFramework {
 
+		// Event AF:started
+		const EVENT_STARTED = "AF:started";
+		// Event AF:ended
+		const EVENT_ENDED = "AF:ended";
+
 		// Singleton instance
 		private static $self = null;
 
@@ -130,6 +135,11 @@
 				];
 			}
 
+			// Check if the module is the app one
+			if ($this->app == $name) {
+				return $this->app($name, $dependencies);
+			}
+
 			// Return the Module instance
 			return new Module($this->modules[$name]);
 		}
@@ -148,11 +158,17 @@
 			$event = $this->injector->getService("event");
 			$azzurro = $this->injector->getService("azzurro");
 
+			// Generate event AF:started
+			$event->emit(self::EVENT_STARTED);
+
 			// Generate event to start the routing process
 			$event->emit($azzurro->getRouteEvent());
 
 			// Generate event to start all the callback
 			$event->emit($azzurro->getCallbackEvent());
+
+			// generate event AF:endend
+			$event->emit(self::EVENT_ENDED);
 
 		}
 
