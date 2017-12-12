@@ -32,9 +32,9 @@
 	namespace AzzurroFramework\Core;
 
 	use \InvalidArgumentException;
-	use \AzzurroFramework\Core\Exception\App\AppModuleNotRegisteredException;
-	use \AzzurroFramework\Core\Exception\Module\ModuleAlreadyRegisteredException;
-	use \AzzurroFramework\Core\Exception\Module\ModuleNotFoundException;
+	use \AzzurroFramework\Core\Exceptions\App\AppModuleNotRegisteredException;
+	use \AzzurroFramework\Core\Exceptions\Module\ModuleAlreadyRegisteredException;
+	use \AzzurroFramework\Core\Exceptions\Module\ModuleNotFoundException;
 
 	use \AzzurroFramework\Core\Injector\Injector;
 	use \AzzurroFramework\Core\Module\Module;

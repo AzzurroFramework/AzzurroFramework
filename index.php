@@ -48,7 +48,7 @@
 	require_once(__AF_DIR__ . "/autoloader.php");
 
 	//--- LOAD USER APPLICATION ---
-	require_once(__AF_APP_DIR__ . "/autoloader.php");
+	require_once(__AF_APP_DIR__ . "/app.php");
 
 	//--- BOOTSTRAP THE FRAMEWORK ---
 	$azzurro->boostrap();

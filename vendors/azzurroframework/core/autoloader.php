@@ -27,6 +27,7 @@
 
 	use \AzzurroFramework\Core\AzzurroFramework;
 
+
 	//--- CORE CLASS AUTOLOADER FUNCTION ---
 	spl_autoload_register(function ($class) {
 		// Remove white spaces at the start of the class
@@ -100,6 +101,38 @@
 			require_once($fileName);
 		}
 	});
+
+
+	//--- CORE INTERFACE GLOBALLY USABLE WITHOUT NAMESPACE ---
+	spl_autoload_register(function ($class) {
+		// Remove white spaces at the start of the class
+		$className = ltrim($class, '\\');
+
+		// If there is a namespace
+		if ($lastNsPos = strrpos($class, '\\')) {
+			$className = substr($className, $lastNsPos + 1);
+		}
+
+		// If it's an interface
+		if (strpos($className, "Interface") !== false) {
+			// Checking if the interface required is a core one
+			switch ($className) {
+				
+				// ServiceProviderInterface
+				case "ServiceProviderInterface":
+					$original = "\AzzurroFramework\Core\Interfaces\Service\ServiceProviderInterface";
+					break;
+				
+				// No core interface found
+				default:
+					return;
+			}
+
+			// Aliasing the interface
+			class_alias($original, $class, true);
+		}
+	});
+
 
 	//--- INSTANTIATE THE FRAMEWORK ---
 	$azzurro = AzzurroFramework::getInstance();
