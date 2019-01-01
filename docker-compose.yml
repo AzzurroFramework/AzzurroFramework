@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  webserver:
+    image: azzurroframework-webserver:latest
+    build:
+      context: .
+    volumes:
+      - "./build:/var/www/html/"
+    ports:
+      - "80:80"
