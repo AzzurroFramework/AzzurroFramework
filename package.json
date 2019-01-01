@@ -1,0 +1,26 @@
+{
+  "name": "azzurroframework",
+  "version": "0.0.1-pre-alpha",
+  "description": "AzzurroFramwork is a PHP framework inspired by AngularJS and its dependency injection",
+  "scripts": {
+    "build": "gulp build-dev & docker-compose build",
+    "start": "docker-compose up -d & gulp",
+    "stop": "docker-compose down"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AzzurroFramework/azzurroframework.git"
+  },
+  "author": "Alessandro Pasqualini <alessandro.pasqualini.1105@gmail.com> (https://github.com/alessandro1105)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/AzzurroFramework/azzurroframework/issues"
+  },
+  "homepage": "https://github.com/AzzurroFramework/azzurroframework#readme",
+  "devDependencies": {
+    "del": "^3.0.0",
+    "gulp": "^4.0.0",
+    "gulp-clean": "^0.4.0",
+    "path": "^0.12.7"
+  }
+}
