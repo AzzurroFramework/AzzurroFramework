@@ -9,4 +9,9 @@
 */
 
 	// Application main module
-	$azzurro->app("app", []);
+	$azzurro
+		->app("app", [])
+
+		->run(function () {
+			echo "APP RUNNED!";
+		});

@@ -25,69 +25,53 @@
 	
 
 	// --- DECLARATION ---
-	$azzurro->module("af", ['auto'])
+	$azzurro
+		->module("af", ['auto'])
 
-	// --- CONFIG ---
-	->config(function ($azzurroProvider) {
-		// Configuring the event to start the routing
-		$azzurroProvider->setRouteEvent("RouterService::route");
+		// --- CONFIG ---
+		->config(function ($azzurroProvider) {
+			// Configuring the event to start the routing
+			$azzurroProvider->setRouteEvent("RouterService::route");
 
-		// Configuring the event to start the callbacks
-		$azzurroProvider->setCallbackEvent("CallbackService::callback");
-	})
+			// Configuring the event to start the callbacks
+			$azzurroProvider->setCallbackEvent("CallbackService::callback");
+		})
 
-	// --- RUN ---
-	->run(function ($event) {
-		// Register the callback to start the route
-		$event->on("RouterService::route", function ($server, $router) {
-			// Getting the path of the request
-			$url = $server->get("PATH_INFO");
-			// If the query string is not empty
-			if (!empty($server->get("QUERY_STRING"))) {
-				$url .= "?" . $server->get("QUERY_STRING");
-			}
-			// Removed "/index.php"
-			if (strlen($url) >= 10 and substr_compare($url, "/index.php", 0, 10) === 0) {
-				$url = substr($url, 10);
-			}
-			// Check if the url is empty
-			if (empty($url)) {
-				$url = "/";
-			}
+		// --- RUN ---
+		->run(function ($event) {
+			// Register the callback to start the route
+			$event
+				->on("RouterService::route", function ($router) {
+					global $_SERVER;
 
-			// Route the request
-			$router->route($url);
-		});
-	})
+					// Getting the path of the request
+					$url = $_SERVER['PATH_INFO'];
 
-	// --- SERVICES ----
-	
-	// $log service
-	->provider("log", "\AzzurroFramework\Core\Modules\AF\Log\LogServiceProvider")
-	// $router service
-	->provider("router", "\AzzurroFramework\Core\Modules\AF\Router\RouterServiceProvider")
-	
-	// Superglobal variable services
-	// $cookie service
-	->service("cookie", "\AzzurroFramework\Core\Modules\AF\Superglobal\Cookie\CookieService")
-	// $env service
-	->service("env", "\AzzurroFramework\Core\Modules\AF\Superglobal\Env\EnvService")
-	// $files service
-	->service("files", "\AzzurroFramework\Core\Modules\AF\Superglobal\Files\FilesService")
-	// $get service
-	->service("get", "\AzzurroFramework\Core\Modules\AF\Superglobal\Get\GetService")
-	// $global service
-	->service("global", "\AzzurroFramework\Core\Modules\AF\Superglobal\GlobalVar\GlobalVarService")
-	// $post service
-	->service("post", "\AzzurroFramework\Core\Modules\AF\Superglobal\Post\PostService")
-	// $request service
-	->service("request", "\AzzurroFramework\Core\Modules\AF\Superglobal\Request\RequestService")
-	// $server service
-	->service("server", "\AzzurroFramework\Core\Modules\AF\Superglobal\Server\ServerService")
-	// $session service
-	->service("session", "\AzzurroFramework\Core\Modules\AF\Superglobal\Session\SessionService")
+					// If the query string is not empty
+					if (!empty($_SERVER['QUERY_STRING'])) {
+						$url .= "?" . $_SERVER['QUERY_STRING'];
+					}
+					// Removed "/index.php"
+					if (strlen($url) >= 10 and substr_compare($url, "/index.php", 0, 10) === 0) {
+						$url = substr($url, 10);
+					}
+					// Check if the url is empty
+					if (empty($url)) {
+						$url = "/";
+					}
 
-	// $template service
-	->service("template", "\AzzurroFramework\Core\Modules\AF\Template\TemplateService");
+					// Route the request
+					$router->route($url);
+				});
+		})
+
+		// --- SERVICES ----
+		
+		// $log service
+		->provider("log", "\AzzurroFramework\Core\Modules\AF\Log\LogServiceProvider")
+		// $router service
+		->provider("router", "\AzzurroFramework\Core\Modules\AF\Router\RouterServiceProvider")
+		// $template service
+		->service("template", "\AzzurroFramework\Core\Modules\AF\Template\TemplateService");
 
 
