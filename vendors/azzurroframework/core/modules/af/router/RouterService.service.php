@@ -59,6 +59,8 @@
 		// Indicates if the first route has been made
 		private $firstRoute;
 
+		private $httpMethod;
+
 
 		// Contructor
 		public function __construct(&$config, $injector, $controller) {
@@ -75,6 +77,10 @@
 				"params" => null
 			);
 			$this->firstRoute = false;
+
+			// Get the method of the request
+			global $_SERVER;
+			$this->httpMethod = $_SERVER['REQUEST_METHOD'];
 		}
 
 		// Method that route the request
@@ -137,7 +143,7 @@
 		// Method to change the current state
 		public function go(string $name, array $params = null) {
 			// Check if the name is valid
-			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $name)) {
+			if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_-\x7f-\xff]*$/', $name)) {
 				InvalidArgumentException("'name' field must be a valid state name!");
 			}
 			if (!is_null($params)) {
@@ -196,42 +202,45 @@
 			if (!is_null($this->current['params'])) {
 				$current['params'] = $this->current['params'];
 			}
-			
+
 
 			// Return the current state
 			return $current;
 		}
-		
+
 
 		// Transit method, it will execute the transitions
 		private function transit($state) {
 			// Save the current state
 			$this->current['state'] = $state;
 
-			// Getting the template processor
-			$template = $this->injector->get($this->config['templateProcessor']);
-			// Reset the template processor
-			$template->reset();
-			// Setting up the template
-			if (isset($state['template'])) {
-				$template->setTemplate($state['template'], false);
-			} else if (isset($state['templateUrl'])) {
-				$template->setTemplate($state['templateUrl'], true);
-			}
+			if (isset($state['template']) or isset($state['templateUrl']) or isset($state['controller'])) {
 
-			// If the controller is defined inside the state
-			if (isset($state['controller'])) {
-				// Execute the controller
-				$render = $this->controller->execute($state['controller']);
-
-				// If the controller wants to render it's view
-				if ($render) {
-					$template->render(true);
+				// Getting the template processor
+				$template = $this->injector->get($this->config['templateProcessor']);
+				// Reset the template processor
+				$template->reset();
+				// Setting up the template
+				if (isset($state['template'])) {
+					$template->setTemplate($state['template'], false);
+				} else if (isset($state['templateUrl'])) {
+					$template->setTemplate($state['templateUrl'], true);
 				}
 
-			// If the controller is not specified render the template without processing it
-			} else {
-				$template->render(false);
+				// If the controller is defined inside the state
+				if (isset($state['controller'])) {
+					// Execute the controller
+					$render = $this->controller->execute($state['controller']);
+
+					// If the controller wants to render it's view
+					if ($render) {
+						$template->render(true);
+					}
+
+				// If the controller is not specified render the template without processing it
+				} else {
+					$template->render(false);
+				}
 			}
 		}
 
@@ -262,7 +271,7 @@
 				}
 
 			}
-			
+
 			// Reset params array
 			$this->current['params'] = null;
 
@@ -295,7 +304,22 @@
 
 					// If the two urls are the same return the state
 					if ($this->compareUrl($urlExploded, $state['urlExploded'])) {
-						return $state;
+
+						// Check if the current http method is included into the allowed methods of the state
+						// If methods is not setted => all methods are accepted
+						if (!isset($state['methods'])) {
+							return $state;
+
+						// Methods key is setted
+						} else {
+							// Search in all state if found return
+							foreach ($state['methods'] as $method) {
+								if ($this->httpMethod == $method) {
+									return $state;
+								}
+							}
+						}
+
 					}
 				}
 			}
@@ -320,7 +344,7 @@
 			return null;
 		}
 
-		// Method that will compare two exploded url 
+		// Method that will compare two exploded url
 		// url1 is the reference, url2 is the candidate
 		private function compareUrl($url1, $url2) {
 			// Array to contains all the rest parameters
@@ -352,7 +376,7 @@
 			// If $url2LastExploded[0] is a parameter, save it and continue processing
 			if (!empty($url2LastExploded[0]) and substr_compare($url2LastExploded[0], ":", 0, 1) === 0) {
 				$params[substr($url2LastExploded[0], 1)] = $url1LastExploded[0];
-			
+
 			// If the $url1LastExploded[0] != $url2LastExploded[0], the urls are different
 			} else if ($url1LastExploded[0] != $url2LastExploded[0]) {
 				return false;

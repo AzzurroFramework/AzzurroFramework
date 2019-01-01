@@ -36,9 +36,10 @@
 		$routeProvider.state([
 			"name" => "state_name", 				// Optional, must be a valid variable name and be unique
 			"url" => "state/url", 					// Optional, must be a valid url path
-			"controller" => "controller_name", 		// Mandatory
+			"controller" => "controller_name", 		// Optional
 			"template" => "template in string", 	// Optional, only template or templateUrl in the same state definition
-			"templateUrl" => "path/to/find/tpl"		// Optional, only template or templateUrl in the same state definition
+			"templateUrl" => "path/to/find/tpl",	// Optional, only template or templateUrl in the same state definition
+			"methods" => "GET|POST|PUT|..."			// Optional, if not present, it is interpreted as all methods
 		]);
 	*/
 
@@ -63,14 +64,18 @@
 
 		// Register a state
 		public function state(array $state) {
+			// State definition cannot be empty
+			if ($state == array()) {
+				throw new InvalidArgumentException("State definition cannot be empty!");
+			}
 			// url
 			if (isset($state['url']) and !preg_match("/^(\/(\:?[a-zA-Z0-9_]+))*(\/|(\/?\?[a-zA-Z0-9_]+(\&[a-zA-Z0-9_]+)*))?$/", $state['url'])) {
-				throw new InvalidArgumentException("\$url must be a valid url path!");
+				throw new InvalidArgumentException("'url' must be a valid url path!");
 			}
 			// name
 			if (isset($state['name'])) {
 				// Check if the name is valid
-				if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $state['name'])) {
+				if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_-\x7f-\xff]*$/', $state['name'])) {
 					InvalidArgumentException("'name' field must be a valid state name!");
 				}
 				// Check the uniqueness of the name
@@ -81,7 +86,7 @@
 				}
 			}
 			// controller
-			if (isset($state['controller']) and !preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $state['controller'])) {
+			if (isset($state['controller']) and !preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_-\x7f-\xff]*$/', $state['controller'])) {
 				throw new InvalidArgumentException("'controller' field must be a valid controller name!");
 			}
 			// template
@@ -91,6 +96,33 @@
 			// templateUrl
 			if (isset($state['templateUrl']) and !file_exists($state['templateUrl'])) {
 				throw new InvalidArgumentException("'templateUrl' field must be a valid template file!");
+			}
+			// method
+			if (isset($state['methods'])) {
+				// Explode the methods
+				$methods = explode('|', $state['methods']);
+
+				// Check if the methods name are correct
+				foreach($methods as $method) {
+					switch ($method) {
+						case 'GET':
+						case 'HEAD':
+						case 'POST':
+						case 'PUT':
+						case 'PUT':
+						case 'DELETE':
+						case 'CONNECT':
+						case 'OPTIONS':
+						case 'TRACE':
+						case 'PATCH':
+							// Valid methods
+							break;
+						default:
+							throw new InvalidArgumentException("'methods' field must contains valid methods name (they must be uppercase)!");
+					}
+				}
+
+				$state['methods'] = $methods;
 			}
 
 			// Save the state definition
