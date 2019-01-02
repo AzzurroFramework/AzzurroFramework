@@ -26,9 +26,11 @@
 	namespace AzzurroFramework\Core;
 
 	use \InvalidArgumentException;
-	use \AzzurroFramework\Core\Exceptions\App\AppModuleNotRegisteredException;
-	use \AzzurroFramework\Core\Exceptions\Module\ModuleAlreadyRegisteredException;
-	use \AzzurroFramework\Core\Exceptions\Module\ModuleNotFoundException;
+
+	use \AzzurroFramework\Core\App\Exceptions\AppModuleNotRegisteredException;
+
+	use \AzzurroFramework\Core\Module\Exceptions\ModuleAlreadyRegisteredException;
+	use \AzzurroFramework\Core\Module\Exceptions\ModuleNotFoundException;
 
 	use \AzzurroFramework\Core\Injector\Injector;
 	use \AzzurroFramework\Core\Module\Module;
@@ -143,7 +145,7 @@
 
 		//--- EXECUTING THE FRAMEWORK ---
 		// Boostrap the framework
-		public function boostrap() {
+		public function bootstrap() {
 			if (is_null($this->app)) {
 				throw new AppModuleNotRegisteredException("App module has not been defined!");
 			}
@@ -173,41 +175,6 @@
 		// Return the version of the framework
 		public function version() {
 			return __AF_VERSION__;
-		}
-
-		//--- REGISTER COMPONENTS OF MODULE af ---
-		public function registerAutoModuleComponent() {
-			// Create the module
-			$auto = $this->module("auto", []);
-
-			// Prepare the injector to pass to services
-			$injector = $this->injector;
-
-			// Registering components to the "auto" module
-			// $azzurro service
-			$auto->provider("azzurro", "\AzzurroFramework\Core\Modules\Auto\Azzurro\AzzurroServiceProvider");
-
-			// $callback service
-			$auto->service("callback", "\AzzurroFramework\Core\Modules\Auto\Callback\CallbackService");
-
-			// $controller service
-			$auto->factory("controller", function () use ($injector) {
-				return new ControllerService($injector);
-			});
-
-			// $events service
-			$auto->service("event", "\AzzurroFramework\Core\Modules\Auto\Event\EventService");
-
-			// $filters service
-			$auto->factory("filter", function () use ($injector) {
-				return new FilterService($injector);
-			});
-
-			// $injector service
-			$auto->factory("injector", function () use ($injector) {
-				return new InjectorService($injector);
-			});
-
 		}
 
 	}

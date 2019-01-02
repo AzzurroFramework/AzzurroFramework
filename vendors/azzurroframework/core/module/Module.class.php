@@ -26,15 +26,20 @@
 	namespace AzzurroFramework\Core\Module;
 
 	use \InvalidArgumentException;
-	use \AzzurroFramework\Core\Exceptions\Constant\ConstantAlreadyRegisteredException;
-	use \AzzurroFramework\Core\Exceptions\Controller\ControllerAlreadyRegisteredException;
-	use \AzzurroFramework\Core\Exceptions\Filter\FilterAlreadyRegisteredException;
-	use \AzzurroFramework\Core\Exceptions\Module\ModuleConfigAlreadyRegisteredException;
-	use \AzzurroFramework\Core\Exceptions\Module\ModuleRunAlreadyRegisteredException;
-	use \AzzurroFramework\Core\Exceptions\Service\ServiceAlreadyRegisteredException;
+
+	use \AzzurroFramework\Core\Constant\Exceptions\ConstantAlreadyRegisteredException;
+
+	use \AzzurroFramework\Core\Controller\Exceptions\ControllerAlreadyRegisteredException;
+
+	use \AzzurroFramework\Core\Filter\Exceptions\FilterAlreadyRegisteredException;
+
+	use \AzzurroFramework\Core\Module\Exceptions\ModuleConfigAlreadyRegisteredException;
+	use \AzzurroFramework\Core\Module\Exceptions\ModuleRunAlreadyRegisteredException;
+
+	use \AzzurroFramework\Core\Service\Exceptions\ServiceAlreadyRegisteredException;
 
 
-	use \AzzurroFramework\Core\Interfaces\Service\ServiceProviderInterface;
+	use \AzzurroFramework\Core\Service\Interfaces\ServiceProviderInterface;
 
 
 	//--- Module class ----
