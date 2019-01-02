@@ -27,8 +27,6 @@
 
 	use \InvalidArgumentException;
 
-	use \AzzurroFramework\Core\Service\Interfaces\ServiceProviderInterface;
-
 
 	/*
 		STATE DEFINITION
@@ -45,7 +43,7 @@
 
 
 	//--- RouterServiceProvider provider ----
-	final class RouterServiceProvider implements ServiceProviderInterface {
+	final class RouterServiceProvider implements ServiceProvider {
 
 		// Variable that contains all the configuration for the service
 		private $config;

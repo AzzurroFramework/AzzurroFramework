@@ -27,11 +27,9 @@
 
 	use \InvalidArgumentException;
 
-	use \AzzurroFramework\Core\Service\Interfaces\ServiceProviderInterface;
 
-
-	//--- AzzurroServiceProvider provider ----
-	final class AzzurroServiceProvider implements ServiceProviderInterface {
+	//--- AzzurroServiceProvider provider ---
+	final class AzzurroServiceProvider implements ServiceProvider {
 
 		// Variable that contains all the configuration for the service $azzurro (AzzurroFramework)
 		private $config;

@@ -27,11 +27,9 @@
 
 	use \InvalidArgumentException;
 
-	use \AzzurroFramework\Core\Service\Interfaces\ServiceProviderInterface;
-
 
 	//--- LogServiceProvider provider ----
-	final class LoggerServiceProvider implements ServiceProviderInterface {
+	final class LoggerServiceProvider implements ServiceProvider {
 
 		// Variable that contains all the configuration for the service
 		private $config;
