@@ -26,29 +26,45 @@
 	@url       https://github.com/alessandro1105
 */
 
+	// Debug
+	ini_set('display_errors', 1);
+	error_reporting(E_ALL);
+
 	use \AzzurroFramework\Core\AzzurroFramework;
 
+
 	// --- VERSION ---
-	define("__AF_VERSION__", "0.0.1-pre-alfa");
+	define('__AF_VERSION__', "0.0.1-pre-alfa");
 
-	// --- PATH CONSTANTS ---
+
+	// --- DEFINE DIRECTORIES ---
 	// Server root
-	define("__AF_ROOT__", __DIR__);
+	define('__AF_ROOT__', __DIR__);
 	// Vendors directory
-	define("__AF_VENDOR_DIR__", __AF_ROOT__ . DIRECTORY_SEPARATOR . "vendors");
-	// Azzurro Framework core directory
-	define("__AF_DIR__", __AF_VENDOR_DIR__ . DIRECTORY_SEPARATOR . "azzurroframework");
+	define('__AF_VENDORS_DIR__', __AF_ROOT__ . '/vendors');
 	// Logs directory
-	define("__AF_LOGS_DIR__", __AF_ROOT__ . DIRECTORY_SEPARATOR . "logs");
+	define('__AF_LOGS_DIR__', __AF_ROOT__ . '/logs');
 	// User application directory
-	define("__AF_APP_DIR__", __AF_ROOT__ . DIRECTORY_SEPARATOR . "app");
+	define('__AF_APP_DIR__', __AF_ROOT__ . '/app');
 
-	
-	// --- LOAD AZZURRO FRAMEWORK ---
-	require_once(__AF_DIR__ . "/autoloader.php");
+	// Azzurro Framework core directory
+	define('__AF_CORE_DIR__', __AF_VENDORS_DIR__ . '/azzurroframework/core');
+	// Azzurro Framework core modules
+	define('__AF_MODULES_DIR__', __AF_VENDORS_DIR__ . '/azzurroframework/modules');
 
-	// --- LOAD USER APPLICATION ---
-	require_once(__AF_APP_DIR__ . "/app.php");
 
-	// --- BOOTSTRAP THE FRAMEWORK ---
-	$azzurro->boostrap();
+	// --- BOOTSTRAP ---
+
+	// Require core autoloader
+	require_once(__AF_CORE_DIR__ . "/autoloader.php");
+
+	// // Instantiate framework main class
+	$azzurro = AzzurroFramework::getInstance();
+
+	// // Require core modules autoloader
+	require_once(__AF_MODULES_DIR__ . '/autoloader.php');
+	// // Require user app autolaoder
+	require_once(__AF_APP_DIR__ . "/autoloader.php");
+
+	// // Bootstrap and launch user app
+	$azzurro->bootstrap();

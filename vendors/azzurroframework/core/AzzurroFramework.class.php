@@ -26,16 +26,14 @@
 	namespace AzzurroFramework\Core;
 
 	use \InvalidArgumentException;
-	use \AzzurroFramework\Core\Exceptions\App\AppModuleNotRegisteredException;
-	use \AzzurroFramework\Core\Exceptions\Module\ModuleAlreadyRegisteredException;
-	use \AzzurroFramework\Core\Exceptions\Module\ModuleNotFoundException;
+
+	use \AzzurroFramework\Core\App\Exceptions\AppModuleNotRegisteredException;
+
+	use \AzzurroFramework\Core\Module\Exceptions\ModuleAlreadyRegisteredException;
+	use \AzzurroFramework\Core\Module\Exceptions\ModuleNotFoundException;
 
 	use \AzzurroFramework\Core\Injector\Injector;
 	use \AzzurroFramework\Core\Module\Module;
-
-	use \AzzurroFramework\Core\Modules\Auto\Injector\InjectorService;
-	use \AzzurroFramework\Core\Modules\Auto\Filter\FilterService;
-	use \AzzurroFramework\Core\Modules\Auto\Controller\ControllerService;
 
 
 	//--- AzzurroFramework class ----
@@ -79,8 +77,6 @@
 			$this->app = null;
 			$this->injector = new Injector($this->modules);
 
-			// Reister af module components
-			$this->registerAutoModuleComponent();
 		}
 
 		//--- CERATING AND GETTING THE MAIN MODULE ---
@@ -143,7 +139,7 @@
 
 		//--- EXECUTING THE FRAMEWORK ---
 		// Boostrap the framework
-		public function boostrap() {
+		public function bootstrap() {
 			if (is_null($this->app)) {
 				throw new AppModuleNotRegisteredException("App module has not been defined!");
 			}
@@ -169,45 +165,28 @@
 
 		}
 
-		//--- VERSION INFO ---
-		// Return the version of the framework
-		public function version() {
-			return __AF_VERSION__;
+		public function __get($property) {
+			switch ($property) {
+				case 'injector':
+					return $this->getInjector();
+					break;
+				case 'version':
+					return $this->getVersion();
+					break;
+				
+				default:
+					return null;
+			}
 		}
 
-		//--- REGISTER COMPONENTS OF MODULE af ---
-		public function registerAutoModuleComponent() {
-			// Create the module
-			$auto = $this->module("auto", []);
+		// Return framework injector instance
+		private function getInjector() {
+			return $this->injector;
+		}
 
-			// Prepare the injector to pass to services
-			$injector = $this->injector;
-
-			// Registering components to the "auto" module
-			// $azzurro service
-			$auto->provider("azzurro", "\AzzurroFramework\Core\Modules\Auto\Azzurro\AzzurroServiceProvider");
-
-			// $callback service
-			$auto->service("callback", "\AzzurroFramework\Core\Modules\Auto\Callback\CallbackService");
-
-			// $controller service
-			$auto->factory("controller", function () use ($injector) {
-				return new ControllerService($injector);
-			});
-
-			// $events service
-			$auto->service("event", "\AzzurroFramework\Core\Modules\Auto\Event\EventService");
-
-			// $filters service
-			$auto->factory("filter", function () use ($injector) {
-				return new FilterService($injector);
-			});
-
-			// $injector service
-			$auto->factory("injector", function () use ($injector) {
-				return new InjectorService($injector);
-			});
-
+		// Return the version of the framework
+		private function getVersion() {
+			return __AF_VERSION__;
 		}
 
 	}

@@ -27,25 +27,31 @@
 	namespace AzzurroFramework\Core\Injector;
 	
 	use \InvalidArgumentException;
-	use \AzzurroFramework\Core\Exceptions\ComponentNotFoundException;
-	use \AzzurroFramework\Core\Exceptions\FactoryFunctionResultException;
-	use \AzzurroFramework\Core\Exceptions\Constant\ConstantNotFoundException;
-	use \AzzurroFramework\Core\Exceptions\Controller\ControllerClassNotFoundException;
-	use \AzzurroFramework\Core\Exceptions\Controller\ControllerNotFoundException;
-	use \AzzurroFramework\Core\Exceptions\Filter\FilterNotFoundException;
-	use \AzzurroFramework\Core\Exceptions\Module\ModuleNotFoundException;
-	use \AzzurroFramework\Core\Exceptions\Service\ServiceClassNotFoundException;
-	use \AzzurroFramework\Core\Exceptions\Service\ServiceNotFoundException;
-	use \AzzurroFramework\Core\Exceptions\Service\ServiceProviderClassNotFoundException;
-	use \AzzurroFramework\Core\Exceptions\Service\ServiceProviderClassNotValidException;
-	use \AzzurroFramework\Core\Exceptions\Service\ServiceProviderNotFoundException;
-	use \AzzurroFramework\Core\Exceptions\Service\ServiceProviderResultException;
+
+	use \AzzurroFramework\Core\Injector\Exceptions\ComponentNotFoundException;
+	use \AzzurroFramework\Core\Injector\Exceptions\FactoryFunctionResultException;
+
+	use \AzzurroFramework\Core\Constant\Exceptions\ConstantNotFoundException;
+
+	use \AzzurroFramework\Core\Controller\Exceptions\ControllerClassNotFoundException;
+	use \AzzurroFramework\Core\Controller\Exceptions\ControllerNotFoundException;
+
+	use \AzzurroFramework\Core\Filter\Exceptions\FilterNotFoundException;
+
+	use \AzzurroFramework\Core\Module\Exceptions\ModuleNotFoundException;
+
+	use \AzzurroFramework\Core\Service\Exceptions\ServiceClassNotFoundException;
+	use \AzzurroFramework\Core\Service\Exceptions\ServiceNotFoundException;
+	use \AzzurroFramework\Core\Service\Exceptions\ServiceProviderClassNotFoundException;
+	use \AzzurroFramework\Core\Service\Exceptions\ServiceProviderClassNotValidException;
+	use \AzzurroFramework\Core\Service\Exceptions\ServiceProviderNotFoundException;
+	use \AzzurroFramework\Core\Service\Exceptions\ServiceProviderResultException;
 
 	use \ReflectionFunction;
 	use \ReflectionMethod;
 	use \ReflectionClass;
 
-	use \AzzurroFramework\Core\Interfaces\Service\ServiceProviderInterface;
+	use \AzzurroFramework\Core\Service\Interfaces\ServiceProviderInterface;
 
 
 	//--- Injector class ----
