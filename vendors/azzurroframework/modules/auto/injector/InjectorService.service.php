@@ -24,7 +24,9 @@
 	// Strict type hint
 	declare(strict_types = 1);
 
-	namespace AzzurroFramework\Core\Modules\Auto\Injector;
+	namespace AzzurroFramework\Modules\Auto\Injector;
+
+	use \InvalidArgumentException;
 
 	use \AzzurroFramework\Core\Injector\Injector;
 	

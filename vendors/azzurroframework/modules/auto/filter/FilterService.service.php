@@ -23,7 +23,9 @@
 	// Strict type hint
 	declare(strict_types = 1);
 
-	namespace AzzurroFramework\Core\Modules\Auto\Filter;
+	namespace AzzurroFramework\Modules\Auto\Filter;
+
+	use \InvalidArgumentException;
 
 	use \AzzurroFramework\Core\Injector\Injector;
 

@@ -32,7 +32,7 @@
 
 	use \InvalidArgumentException;
 
-	use AzzurroFramework\Core\Modules\AF\Template\TemplateNotSetException;
+	use AzzurroFramework\Modules\AF\Template\Exceptions\TemplateNotSetException;
 
 
 	//--- TemplateService service ----

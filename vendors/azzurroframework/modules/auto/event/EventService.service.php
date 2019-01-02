@@ -23,7 +23,7 @@
 	// Strict type hint
 	declare(strict_types = 1);
 
-	namespace AzzurroFramework\Core\Modules\Auto\Event;
+	namespace AzzurroFramework\Modules\Auto\Event;
 
 	use \InvalidArgumentException;
 

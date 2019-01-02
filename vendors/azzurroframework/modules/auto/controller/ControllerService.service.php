@@ -23,11 +23,11 @@
 	// Strict type hint
 	declare(strict_types = 1);
 
-	namespace AzzurroFramework\Core\Modules\Auto\Controller;
-
-	use \AzzurroFramework\Core\Injector\Injector;
+	namespace AzzurroFramework\Modules\Auto\Controller;
 
 	use \InvalidArgumentException;
+
+	use \AzzurroFramework\Core\Injector\Injector;
 
 
 	//--- ControllerService service ----

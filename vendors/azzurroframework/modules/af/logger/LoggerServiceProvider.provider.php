@@ -27,7 +27,7 @@
 
 	use \InvalidArgumentException;
 
-	use \AzzurroFramework\Core\Interfaces\Service\ServiceProviderInterface;
+	use \AzzurroFramework\Core\Service\Interfaces\ServiceProviderInterface;
 
 
 	//--- LogServiceProvider provider ----

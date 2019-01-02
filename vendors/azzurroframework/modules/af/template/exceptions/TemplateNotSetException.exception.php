@@ -20,7 +20,7 @@
 	@url       https://github.com/alessandro1105
 */
 
-	namespace AzzurroFramework\Core\Modules\AF\Template;
+	namespace AzzurroFramework\Modules\AF\Template\Exceptions;
 	
 	use \Exception;
 

@@ -23,11 +23,9 @@
 	// Strict type hint
 	declare(strict_types = 1);
 
-	namespace AzzurroFramework\Core\Modules\AF\Log;
+	namespace AzzurroFramework\Modules\AF\Logger;
 
 	use \InvalidArgumentException;
-
-	use \AzzurroFramework\Core\Interfaces\Service\ServiceProvider;
 
 
 	//--- LogServiceProvider provider ----

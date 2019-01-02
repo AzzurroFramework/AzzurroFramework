@@ -28,7 +28,7 @@
 	// Strict type hint
 	declare(strict_types = 1);
 
-	namespace AzzurroFramework\Core\Modules\AF\Router;
+	namespace AzzurroFramework\Modules\AF\Router;
 
 	use \InvalidArgumentException;
 

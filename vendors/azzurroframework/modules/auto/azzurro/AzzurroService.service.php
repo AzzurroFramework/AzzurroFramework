@@ -23,13 +23,11 @@
 	// Strict type hint
 	declare(strict_types = 1);
 
-	namespace AzzurroFramework\Core\Modules\Auto\Azzurro;
+	namespace AzzurroFramework\Modules\Auto\Azzurro;
 
 	use \InvalidArgumentException;
 
 	use \AzzurroFramework\Core\AzzurroFramework;
-
-	use \AzzurroFramework\Core\Interfaces\Service\ServiceProvider;
 
 
 	//--- AzzurroService service ----

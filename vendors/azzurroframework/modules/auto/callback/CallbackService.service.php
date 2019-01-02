@@ -24,11 +24,11 @@
 	// Strict type hint
 	declare(strict_types = 1);
 
-	namespace AzzurroFramework\Core\Modules\AF\Callback;
-
-	use \AzzurroFramework\Core\AzzurroFramework;
+	namespace AzzurroFramework\Modules\Auto\Callback;
 
 	use \InvalidArgumentException;
+
+	use \AzzurroFramework\Core\AzzurroFramework;
 
 
 	//--- CallbackService service ----
