@@ -20,9 +20,6 @@
 	@url       https://github.com/alessandro1105
 */
 
-	use \AzzurroFramework\Core\AzzurroFramework;
-
-
 	//--- CORE CLASS AUTOLOADER FUNCTION ---
 	spl_autoload_register(function ($class) {
 
@@ -39,16 +36,16 @@
 			}
 
 			//If it's an interface
-			if (strpos($className, "Interface") !== false) {
-				$file .= 'interfaces/' . $className . ".interface.php";
+			if (strpos($className, 'Interface') !== false) {
+				$file .= $className . '.interface.php';
 
 			// If it's an exception
-			} else if (strpos($className, "Exception") !== false) {
-				$file .= 'exceptions/' . $className . ".exception.php";
+			} else if (strpos($className, 'Exception') !== false) {
+				$file .= $className . '.exception.php';
 
 			// If it's a class
 			} else {
-				$file .= $className . ".class.php";
+				$file .= $className . '.class.php';
 			}
 
 			// If the file exists
