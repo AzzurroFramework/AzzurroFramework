@@ -35,10 +35,6 @@
 	use \AzzurroFramework\Core\Injector\Injector;
 	use \AzzurroFramework\Core\Module\Module;
 
-	use \AzzurroFramework\Core\Modules\Auto\Injector\InjectorService;
-	use \AzzurroFramework\Core\Modules\Auto\Filter\FilterService;
-	use \AzzurroFramework\Core\Modules\Auto\Controller\ControllerService;
-
 
 	//--- AzzurroFramework class ----
 	final class AzzurroFramework {
@@ -81,8 +77,6 @@
 			$this->app = null;
 			$this->injector = new Injector($this->modules);
 
-			// Reister af module components
-			$this->registerAutoModuleComponent();
 		}
 
 		//--- CERATING AND GETTING THE MAIN MODULE ---
@@ -171,9 +165,27 @@
 
 		}
 
-		//--- VERSION INFO ---
+		public function __get($property) {
+			switch ($property) {
+				case 'injector':
+					return $this->getInjector();
+					break;
+				case 'version':
+					return $this->getVersion();
+					break;
+				
+				default:
+					return null;
+			}
+		}
+
+		// Return framework injector instance
+		private function getInjector() {
+			return $this->injector;
+		}
+
 		// Return the version of the framework
-		public function version() {
+		private function getVersion() {
 			return __AF_VERSION__;
 		}
 
