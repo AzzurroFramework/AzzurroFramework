@@ -56,3 +56,14 @@
 		}
 
 	});
+
+	// --- EXPOSE CORE INTERFACES/CLASSES GLOBALLY
+	spl_autoload_register(function ($class) {
+		$classExploded = explode('\\', $class);
+		$className = $classExploded[count($classExploded) -1];
+
+		switch ($className) {
+			case 'ServiceProvider': // Expose ServiceProviderInterface as ServiceProvider
+				class_alias('\AzzurroFramework\Core\Service\Interfaces\ServiceProviderInterface', $class);
+		}
+	});
