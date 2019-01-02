@@ -68,7 +68,7 @@
 		// --- SERVICES ----
 		
 		// $log service
-		->provider("log", "\AzzurroFramework\Modules\AF\Logger\LoggerServiceProvider")
+		->provider("logger", "\AzzurroFramework\Modules\AF\Logger\LoggerServiceProvider")
 		// $router service
 		->provider("router", "\AzzurroFramework\Modules\AF\Router\RouterServiceProvider")
 		// $template service
