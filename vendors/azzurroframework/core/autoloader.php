@@ -2,7 +2,7 @@
 /*
 	Azzurro Framework core loader
 
-	Load the core files and the core modules.
+	Load the core files
 
 
 	Copyright 2017 Alessandro Pasqualini
@@ -25,113 +25,37 @@
 
 	//--- CORE CLASS AUTOLOADER FUNCTION ---
 	spl_autoload_register(function ($class) {
-		// Remove white spaces at the start of the class
-		$className = ltrim($class, '\\');
-		$fileName  = __AF_VENDOR_DIR__ . DIRECTORY_SEPARATOR;
-		$namespace = "";
 
-		// If there is a namespace
-		if ($lastNsPos = strrpos($class, '\\')) {
-			$namespace = substr($className, 0, $lastNsPos);
-			$className = substr($className, $lastNsPos + 1);
-			$fileName  .= strtolower(str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR);
-		}
+		// Check if it's competence of the core
+		if (strpos($class, 'AzzurroFramework\\Core\\') == 0) {
 
-		// If it's an interface
-		if (strpos($className, "Interface") !== false) {
-			$fileName .= $className . ".interface.php";
-
-		// If it's an exception
-		} else if (strpos($className, "Exception") !== false) {
-			$fileName .= $className . ".exception.php";
-
-		// If it's a class
-		} else {
-			$fileName .= $className . ".class.php";
-		
-		}
-
-		// If the file exists
-		if (file_exists($fileName) and is_file($fileName)) {
-			require_once($fileName);
-		}
-	});
-
-
-	//--- CORE MODULES AUTOLOADER ---
-	// Classes and exceptions are automatically loaded
-	spl_autoload_register(function ($class) {
-
-		// Remove white spaces at the start of the class
-		$className = ltrim($class, '\\');
-		$fileName  = __AF_VENDOR_DIR__ . DIRECTORY_SEPARATOR;
-		$namespace = "";
-
-		// If there is a namespace
-		if ($lastNsPos = strrpos($class, '\\')) {
-			$namespace = substr($className, 0, $lastNsPos);
-			$className = substr($className, $lastNsPos + 1);
-			$fileName  .= strtolower(str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR);
-		}
-
-		// If it's a provider
-		if (strpos($className, "Provider") !== false) {
-			$fileName .= $className . ".provider.php";
-
-		// If it's a service	
-		} else if (strpos($className, "Service") !== false) {
-			$fileName .= $className . ".service.php";
-
-		// If it's a filter	
-		} else if (strpos($className, "Filter") !== false) {
-			$fileName .= $className . ".filter.php";
-
-		// If it's a controller
-		} else if (strpos($className, "Controller") !== false) {
-			$fileName .= $className . ".controller.php";
-		}
-
-		// If the file exists
-		if (file_exists($fileName) and is_file($fileName)) {
-			require_once($fileName);
-		}
-	});
-
-
-	//--- CORE INTERFACE GLOBALLY USABLE WITHOUT NAMESPACE ---
-	spl_autoload_register(function ($class) {
-		// Remove white spaces at the start of the class
-		$className = ltrim($class, '\\');
-
-		// If there is a namespace
-		if ($lastNsPos = strrpos($class, '\\')) {
-			$className = substr($className, $lastNsPos + 1);
-		}
-
-		// If it's an interface
-		if (strpos($className, "Interface") !== false) {
-			// Checking if the interface required is a core one
-			switch ($className) {
-				
-				// ServiceProviderInterface
-				case "ServiceProviderInterface":
-					$original = "\AzzurroFramework\Core\Interfaces\Service\ServiceProviderInterface";
-					break;
-				
-				// No core interface found
-				default:
-					return;
+			$classExploded = explode('\\', $class);
+			$className = $classExploded[count($classExploded) -1];
+			$file = __AF_CORE_DIR__ . '/';
+			
+			// Create path for the file
+			for ($i = 2; $i < count($classExploded) - 1; $i++) {
+				$file .= strtolower($classExploded[$i]) . '/';
 			}
 
-			// Aliasing the interface
-			class_alias($original, $class, true);
+			//If it's an interface
+			if (strpos($className, "Interface") !== false) {
+				$file .= 'interfaces/' . $className . ".interface.php";
+
+			// If it's an exception
+			} else if (strpos($className, "Exception") !== false) {
+				$file .= 'exceptions/' . $className . ".exception.php";
+
+			// If it's a class
+			} else {
+				$file .= $className . ".class.php";
+			}
+
+			// If the file exists
+			if (file_exists($file) and is_file($file)) {
+				require_once($file);
+			}
+
 		}
+
 	});
-
-
-	//--- INSTANTIATE THE FRAMEWORK ---
-	$azzurro = AzzurroFramework::getInstance();
-
-	// --- LOADING THE CORE MODULES ---
-	// load 'af' module
-	require_once(__DIR__ . "/modules/af/af.module.php");
