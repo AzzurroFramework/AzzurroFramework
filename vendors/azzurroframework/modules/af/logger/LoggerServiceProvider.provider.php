@@ -60,7 +60,7 @@
 
 		// Get the service
 		public function get() {
-			return new LogService($this->config);
+			return new LoggerService($this->config);
 		}
 
 	}
