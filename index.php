@@ -48,9 +48,9 @@
 	define('__AF_APP_DIR__', __AF_ROOT__ . '/app');
 
 	// Azzurro Framework core directory
-	define('__AF_CORE_DIR__', __AF_VENDORS_DIR__ . '/azzurroframework/core');
+	define('__AF_CORE_DIR__', __AF_ROOT__ . '/core');
 	// Azzurro Framework core modules
-	define('__AF_MODULES_DIR__', __AF_VENDORS_DIR__ . '/azzurroframework/modules');
+	define('__AF_MODULES_DIR__', __AF_ROOT__ . '/modules');
 
 
 	// --- BOOTSTRAP ---
