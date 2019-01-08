@@ -35,18 +35,7 @@
 				$file .= strtolower($classExploded[$i]) . '/';
 			}
 
-			//If it's an interface
-			if (strpos($className, 'Interface') !== false) {
-				$file .= $className . '.interface.php';
-
-			// If it's an exception
-			} else if (strpos($className, 'Exception') !== false) {
-				$file .= $className . '.exception.php';
-
-			// If it's a class
-			} else {
-				$file .= $className . '.class.php';
-			}
+			$file .= $className . '.php';
 
 			// If the file exists
 			if (file_exists($file) and is_file($file)) {
