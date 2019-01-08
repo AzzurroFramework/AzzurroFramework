@@ -25,20 +25,39 @@
 
 	namespace AzzurroFramework\Modules\AF\Request\Input;
 
-	
+	use \Adbar\Dot; // Dot notation from composer package
+
+
 	class Input {
+
+		private $input = null;
+
+		// Costruttore
+		public function __construct() {
+			global $_SERVER;
+			global $_POST;
+
+			$contentType = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : '';
+
+			// Check content-type of the request
+			if (strpos($contentType, 'application/json') !== false) {
+				// Get JSON body
+				$body = file_get_contents('php://input');
+            	//convert JSON into array
+				$this->input = new Dot(json_decode($body, TRUE));
+			
+			} else {
+				$this->input = new Dot($_POST);
+			}
+		}
 
 		// Access inputs
 		public function get(string $key, string $default = null) {
-			global $_COOKIE;
-
-			return isset($_COOKIE[$key]) ? $_COOKIE[$key] : $default;
+			return $this->input->has($key) ? $this->input->get($key) : $default;
 		}
 
 		// Check if an input exists
 		public function has(string $key) {
-			global $_COOKIE;
-
-			return isset($_COOKIE[$key]);
+			return $this->input->has($key);
 		}
 	}

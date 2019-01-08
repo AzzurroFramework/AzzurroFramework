@@ -29,18 +29,20 @@
 	class File {
 
 		// Access files
-		public function get(string $key, string $default = null) {
-			
+		public function get(string $key, $default = null) {
+			$_FILES;
+
+			return isset($_FILES[$key]) ? $_FILES[$key] : $default;
 		}
 
 		// Check if a file exists
 		public function has(string $key) {
-			
+			return isset($_FILES[$key]);
         }
 
         // Check if a file is valid
         public function isValid(string $key) {
-
+			return isset($_FILES[$key]) ? $_FILES[$key]['error'] == UPLOAD_ERR_OK : false;
         }
 
 	}
