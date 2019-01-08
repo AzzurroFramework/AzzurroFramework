@@ -31,6 +31,18 @@ function htaccess() {
 		.pipe(dest(PATH.BUILD));
 }
 
+// Copy core files from src to build
+function core() {
+    return src(PATH.SRC + '/core/**/*')
+        .pipe(dest(PATH.BUILD + '/core/'));
+}
+
+// Copy core modules from src to build
+function modules() {
+    return src(PATH.SRC + '/modules/**/*')
+        .pipe(dest(PATH.BUILD + '/modules/'));
+}
+
 // Copy vendors from src to build
 function vendors() {
     return src(PATH.SRC + '/vendors/**/*')
@@ -46,9 +58,11 @@ function app() {
 // Build project in development environment
 task('build-dev', parallel(
 	index,
-    htaccess,
-    vendors,
-    app
+	htaccess,
+	core,
+	modules,
+	app,
+	vendors
 ));
 
 
@@ -70,20 +84,36 @@ task('watch-dev', function (cb) {
 
 	// Watch htaccess file
 	watch(PATH.SRC + '/.htaccess')
-        .on('all', htaccess);
-        
-    // Watch vendors files
-	watch(PATH.SRC + '/vendors/**/*')
-        .on('add', vendors)
-        .on('change', vendors)
-        .on('unlink', function (filename) {
-            deleteFile(filename, PATH.SRC, PATH.BUILD);
-        });
+		.on('all', htaccess);
+		
+	// Watch core files
+	watch(PATH.SRC + '/core/**/*')
+		.on('add', core)
+		.on('change', core)
+		.on('unlink', function (filename) {
+			deleteFile(filename, PATH.SRC, PATH.BUILD);
+		});
+
+	// Watch modules files
+	watch(PATH.SRC + '/modules/**/*')
+		.on('add', modules)
+		.on('change', modules)
+		.on('unlink', function (filename) {
+			deleteFile(filename, PATH.SRC, PATH.BUILD);
+		});
 
     // Watch app files
 	watch(PATH.SRC + '/app/**/*')
         .on('add', app)
         .on('change', app)
+        .on('unlink', function (filename) {
+            deleteFile(filename, PATH.SRC, PATH.BUILD);
+		});
+		
+	// Watch vendors files
+	watch(PATH.SRC + '/vendors/**/*')
+        .on('add', vendors)
+        .on('change', vendors)
         .on('unlink', function (filename) {
             deleteFile(filename, PATH.SRC, PATH.BUILD);
         });
