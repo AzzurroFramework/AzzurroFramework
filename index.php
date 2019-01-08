@@ -55,6 +55,9 @@
 
 	// --- BOOTSTRAP ---
 
+	// Require vendors autoloader
+	require_once(__AF_VENDORS_DIR__ . "/autoload.php");
+
 	// Require core autoloader
 	require_once(__AF_CORE_DIR__ . "/autoloader.php");
 

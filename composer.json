@@ -1,0 +1,8 @@
+{
+    "config": {
+        "vendor-dir": "vendors"
+    },
+    "require": {
+        "adbario/php-dot-notation": "^2.1"
+    }
+}
